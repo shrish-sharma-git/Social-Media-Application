@@ -1,8 +1,15 @@
+import { Container, Typography } from '@material-ui/core';
+
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
+    <Container>
+      <Typography
+        variant="h4"
+        component="h2"
+      >
+        Hello World.
+      </Typography>
+    </Container>
   );
 }
 
