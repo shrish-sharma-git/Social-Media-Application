@@ -3,32 +3,42 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Paper, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
         Untitled
-      </Link>{' '}
+      {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
 
+const useStyles = makeStyles({
+    linkDesign: {
+        textDecoration: 'none',
+        "&:visited" : {
+            textDecoration: 'none',
+            color: 'inherit'
+        }    
+    }
+})
+
 export default function Signup() {
-    
+    // Styles Hook
+    const classes = useStyles();
+
     // Check For Browser Theme Preference
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
@@ -91,7 +101,7 @@ export default function Signup() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                 />
@@ -107,12 +117,6 @@ export default function Signup() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -124,7 +128,7 @@ export default function Signup() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to='/Login' className={classes.linkDesign} variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

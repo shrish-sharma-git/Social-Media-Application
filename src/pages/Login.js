@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,22 +12,35 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="#">
         Untitled
-      </Link>{' '}
+      {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
 
+const useStyles = makeStyles({
+    linkDesign: {
+        textDecoration: 'none',
+        "&:visited" : {
+            textDecoration: 'none',
+            color: 'inherit'
+        }    
+    }
+})
+
 export default function Login() {
-    
+    // Styles Hook
+    const classes = useStyles();
+
     // Check For Browser Theme Preference
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
@@ -99,11 +111,8 @@ export default function Login() {
                 label="Password"
                 type="password"
                 id="password"
+
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
               />
               <Button
                 type="submit"
@@ -115,12 +124,12 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="#" className={classes.linkDesign} variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link to='/Signup' variant="body2" className={classes.linkDesign}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
