@@ -27,11 +27,9 @@ function Copyright(props) {
   );
 }
 
-
-// const theme = createTheme();
-
 export default function Login() {
     
+    // Check For Browser Theme Preference
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
         () =>
@@ -44,15 +42,9 @@ export default function Login() {
     );
     
 
-    const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
 
   return (
     <ThemeProvider theme={theme}>
@@ -86,7 +78,7 @@ export default function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Welcome Back, Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
@@ -94,7 +86,7 @@ export default function Login() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 autoFocus
