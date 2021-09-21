@@ -129,7 +129,7 @@ function Home(props) {
             
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-          <Card sx={{ margin: '20px', padding: '20px'}}>
+          <Card sx={{ margin: {xs: '0px 0px 15px'}, padding: {xs: '15px'} }}>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
               <Avatar sx={{ backgroundColor: '#1976D2', marginBottom: '10px' }}>
                 SS
@@ -143,7 +143,7 @@ function Home(props) {
               />
               <Button
                 type="submit"
-                sx={{ marginLeft: { xs:'76%', sm: '91%' } }}
+                sx={{ marginLeft: { xs:'79%', sm: '91%' } }}
                 variant="contained"
               >
                 Post
@@ -153,7 +153,7 @@ function Home(props) {
           
           <Divider />
           
-          <Card sx={{ margin: '20px', padding: '20px' }}>
+          <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}  }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
@@ -188,7 +188,7 @@ function Home(props) {
               </Typography>
             </CardActions>
           </Card>
-          <Card sx={{ margin: '20px', padding: '20px' }}>
+          <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}  }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
@@ -223,7 +223,7 @@ function Home(props) {
               </Typography>
             </CardActions>
           </Card>
-          <Card sx={{ margin: '20px', padding: '20px' }}>
+          <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}   }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
