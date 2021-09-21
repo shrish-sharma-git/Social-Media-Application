@@ -15,10 +15,26 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { Avatar, Button, Card, CardHeader } from '@mui/material';
+import { makeStyles } from '@material-ui/styles';
 
+// Drawer Dimensions
 const drawerWidth = 240;
+const rightDrawerWidth = 400;
+
+// Custom Styles Hook
+const useStyles = makeStyles({
+  cardDesign: {
+    margin: "25px",
+    padding: "20px 0px"
+  }
+});
 
 function Landing(props) {
+
+  // Styles Hook
+  const classes = useStyles();
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -62,8 +78,9 @@ function Landing(props) {
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: { sm: `calc(100% - ${drawerWidth}px - ${rightDrawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          mr: { sm: `${rightDrawerWidth}px` },
         }}
       >
         <Toolbar>
@@ -113,6 +130,7 @@ function Landing(props) {
           {drawer}
         </Drawer>
       </Box>
+            
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         <Typography paragraph>
@@ -143,6 +161,67 @@ function Landing(props) {
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
       </Box>
+
+      {/* Right Drawer */}
+      <Box
+        sx={{ width: { sm: rightDrawerWidth }, flexShrink: { sm: 0 }, display: { xs: 'none', sm: 'block' } }}
+      >
+      <div>
+        <Toolbar />
+        <Divider />
+
+        <Typography
+          variant="h6"
+          textAlign="center"
+        >
+          People you may know  
+        </Typography>  
+
+        <Card className={classes.cardDesign}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" sx={{bgcolor: 'blue'}}>
+              SS
+            </Avatar>
+          }
+          title="Slim Shady"
+          subheader="@slim_shady"
+          action={
+            <Button>Follow</Button>
+          }
+        />
+        </Card>
+        <Card className={classes.cardDesign}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" sx={{bgcolor: 'blue'}}>
+              SS
+            </Avatar>
+          }
+          title="Slim Shady"
+          subheader="@slim_shady"
+          action={
+            <Button>Follow</Button>
+          }
+        />
+        </Card>
+        <Card className={classes.cardDesign}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" sx={{bgcolor: 'blue'}}>
+              SS
+            </Avatar>
+          }
+          title="Slim Shady"
+          subheader="@slim_shady"
+          action={
+            <Button>Follow</Button>
+          }
+        />
+        </Card>
+      </div>
+      </Box>
+
     </Box>
   );
 }
