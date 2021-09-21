@@ -15,25 +15,16 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Avatar, Button, Card, CardHeader } from '@mui/material';
-import { makeStyles } from '@material-ui/styles';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, TextField } from '@mui/material';
+import RightSidebar from './components/RightSidebar';
+import { MoreVertRounded } from '@material-ui/icons';
+import { FavoriteRounded, ShareRounded } from '@mui/icons-material';
 
 // Drawer Dimensions
 const drawerWidth = 240;
 const rightDrawerWidth = 400;
 
-// Custom Styles Hook
-const useStyles = makeStyles({
-  cardDesign: {
-    margin: "25px",
-    padding: "20px 0px"
-  }
-});
-
-function Landing(props) {
-
-  // Styles Hook
-  const classes = useStyles();
+function Home(props) {
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -41,6 +32,11 @@ function Landing(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Post Posted!');
+  }
 
   const drawer = (
     <div>
@@ -132,98 +128,142 @@ function Landing(props) {
       </Box>
             
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+          <Toolbar />
+          <Card sx={{ margin: '20px', padding: '20px'}}>
+            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+              <Avatar sx={{ backgroundColor: '#1976D2', marginBottom: '10px' }}>
+                SS
+              </Avatar>
+              <TextField
+                sx={{ marginBottom:'15px'}}
+                placeholder="Share Something..."
+                multiline
+                fullWidth
+                variant="filled"
+              />
+              <Button
+                type="submit"
+                sx={{ marginLeft: { xs:'76%', sm: '91%' } }}
+                variant="contained"
+              >
+                Post
+              </Button>
+            </form>
+          </Card>
+          
+          <Divider />
+          
+          <Card sx={{ margin: '20px', padding: '20px' }}>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
+                  R
+                </Avatar>
+              }
+              title="Dr. Dre"
+              subheader="September 14, 2016"
+            />
+            <CardMedia
+              component="img"
+              height="194"
+              image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
+              alt="Post"
+            />
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                This impressive paella is a perfect party dish and a fun meal to cook
+                together with your guests. Add 1 cup of frozen peas along with the mussels,
+                if you like.
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteRounded />
+              </IconButton>
+              <Typography
+                variant="subtitle2"
+                color="gray"
+              >
+                1k
+              </Typography>
+            </CardActions>
+          </Card>
+          <Card sx={{ margin: '20px', padding: '20px' }}>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
+                  R
+                </Avatar>
+              }
+              title="Dr. Dre"
+              subheader="September 14, 2016"
+            />
+            <CardMedia
+              component="img"
+              height="194"
+              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuWt32PApTxprgg4KjRpo28jGXcTtAi-hDhbzo2AB68Iva1NrMT5BCL2GCTfBHBVGHnpw&usqp=CAU"
+              alt="Post"
+            />
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                This impressive paella is a perfect party dish and a fun meal to cook
+                together with your guests. Add 1 cup of frozen peas along with the mussels,
+                if you like.
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteRounded />
+              </IconButton>
+              <Typography
+                variant="subtitle2"
+                color="gray"
+              >
+                1k
+              </Typography>
+            </CardActions>
+          </Card>
+          <Card sx={{ margin: '20px', padding: '20px' }}>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
+                  R
+                </Avatar>
+              }
+              title="Dr. Dre"
+              subheader="September 14, 2016"
+            />
+            <CardMedia
+              component="img"
+              height="194"
+              image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
+              alt="Post"
+            />
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                This impressive paella is a perfect party dish and a fun meal to cook
+                together with your guests. Add 1 cup of frozen peas along with the mussels,
+                if you like.
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteRounded />
+              </IconButton>
+              <Typography
+                variant="subtitle2"
+                color="gray"
+              >
+                1k
+              </Typography>
+            </CardActions>
+          </Card>
+
+
       </Box>
-
-      {/* Right Drawer */}
-      <Box
-        sx={{ width: { sm: rightDrawerWidth }, flexShrink: { sm: 0 }, display: { xs: 'none', sm: 'block' } }}
-      >
-      <div>
-        <Toolbar />
-        <Divider />
-
-        <Typography
-          variant="h6"
-          textAlign="center"
-        >
-          People you may know  
-        </Typography>  
-
-        <Card className={classes.cardDesign}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" sx={{bgcolor: 'blue'}}>
-              SS
-            </Avatar>
-          }
-          title="Slim Shady"
-          subheader="@slim_shady"
-          action={
-            <Button>Follow</Button>
-          }
-        />
-        </Card>
-        <Card className={classes.cardDesign}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" sx={{bgcolor: 'blue'}}>
-              SS
-            </Avatar>
-          }
-          title="Slim Shady"
-          subheader="@slim_shady"
-          action={
-            <Button>Follow</Button>
-          }
-        />
-        </Card>
-        <Card className={classes.cardDesign}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" sx={{bgcolor: 'blue'}}>
-              SS
-            </Avatar>
-          }
-          title="Slim Shady"
-          subheader="@slim_shady"
-          action={
-            <Button>Follow</Button>
-          }
-        />
-        </Card>
-      </div>
-      </Box>
-
+      <RightSidebar />    
     </Box>
   );
 }
 
-export default Landing;
+export default Home;
