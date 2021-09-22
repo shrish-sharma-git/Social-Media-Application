@@ -1,46 +1,11 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Avatar, Button, Card, CardHeader } from '@mui/material';
 
 const rightDrawerWidth = 400;
-
-const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {['Home', 'Profile'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <HomeRoundedIcon /> : <PersonRoundedIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['Settings'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <SettingsRoundedIcon /> : <SettingsRoundedIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-);
 
 const RightSidebar = () => {
     return (  
