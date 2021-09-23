@@ -15,6 +15,7 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import MenuItems from './MenuItems';
 
 // Drawer Dimensions
 const drawerWidth = 240;
@@ -33,7 +34,7 @@ function MenuDrawer(props) {
     <div>
       <Toolbar />
       <Divider />
-      <List>
+      {/* <List>
         {['Home', 'Profile'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
@@ -53,7 +54,9 @@ function MenuDrawer(props) {
             <ListItemText primary={text} />
           </ListItem>
         ))}
-      </List>
+      </List> */}
+
+      <MenuItems />
     </div>
   );
 
