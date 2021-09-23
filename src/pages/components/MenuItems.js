@@ -3,26 +3,30 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-
-const menuItems = [
-    {
-        text: 'Home',
-        icon: <HomeRoundedIcon />,
-        path: '/'
-    },
-    {
-        text: 'Profile',
-        icon: <PersonRoundedIcon />,
-        path: '/Profile'
-    },
-    {
-        text: 'Settings',
-        icon: <SettingsRoundedIcon />,
-        path: '/Settings'
-    }
-]
+import { useHistory } from 'react-router';
 
 const MenuItems = () => {
+    // React Router History
+    const history = useHistory();
+
+    const menuItems = [
+        {
+            text: 'Home',
+            icon: <HomeRoundedIcon />,
+            path: '/'
+        },
+        {
+            text: 'Profile',
+            icon: <PersonRoundedIcon />,
+            path: '/Profile'
+        },
+        {
+            text: 'Settings',
+            icon: <SettingsRoundedIcon />,
+            path: '/Settings'
+        }
+    ]
+
     return (  
         <div>
             <List>
@@ -30,7 +34,7 @@ const MenuItems = () => {
                     <ListItem
                         button
                         key={item.text}
-                        onClick={() => console.log('Clicked!')}
+                        onClick={() => history.push(item.path)}
                     >
                         <ListItemIcon>{item.icon}</ListItemIcon>
                         <ListItemText>{item.text}</ListItemText>
