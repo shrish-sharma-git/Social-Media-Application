@@ -65,9 +65,8 @@ function MenuDrawer(props) {
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px - ${rightDrawerWidth}px)` },
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          mr: { sm: `${rightDrawerWidth}px` },
         }}
       >
         <Toolbar>
