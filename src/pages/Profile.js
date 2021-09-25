@@ -52,6 +52,14 @@ const Profile = () => {
                             </Typography>
                         </Grid>
                     </Grid>
+
+                    <Grid container sx={{mt: '10px'}}>
+                        <Grid item xs={12}>
+                            Who dress like me, walk talk and act like me
+                            And just might be, the next best thing, but not quite me
+                        </Grid>    
+                    </Grid>
+
                     <Divider sx={{m: '10px 0 10px 0'}} />
                     <Grid container>
                         <Grid item xs={12}>
