@@ -18,7 +18,7 @@ const Profile = () => {
                             <Typography
                                 variant="h6"
                             >
-                                Marshall Mathers
+                                ABC XYZ
                             </Typography>
                             <Typography
                                 variant='caption'
@@ -55,8 +55,7 @@ const Profile = () => {
 
                     <Grid container sx={{mt: '10px'}}>
                         <Grid item xs={12}>
-                            Who dress like me, walk talk and act like me
-                            And just might be, the next best thing, but not quite me
+                            Lorem ipsum dolor sit amet.
                         </Grid>    
                     </Grid>
 

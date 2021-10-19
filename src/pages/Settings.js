@@ -9,42 +9,111 @@ const Settings = () => {
         <Box>
             <MenuDrawer />
             <Box component="main" sx={{ flexGrow: 1, p: 3, margin: {xs: '50px 0px'}, marginLeft: {sm: '240px'}, marginRight: {sm: '400px'} }}>
-                <Card>
+
+                {/* Name Change */}
+                <Card sx={{m: '10px'}}>
                     <CardHeader
-                        subheader="Edit Information"
+                        subheader="Edit Name"
                         action={
                             <IconButton aria-label="edit">
                                 <EditRoundedIcon/>
                             </IconButton>
                         }
                     />
-                    <Grid container sx={{m: '10px'}}>
+                    <Grid container sx={{m: '10px', p: '10px'}}>
                         <Grid item xs={6}>
-                            <Typography variant="subtitle2">Name:</Typography>
+                            <Typography variant="h5">Name:</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography>Marshall Mathers</Typography>
+                            <Typography variant="h5">ABC XYZ</Typography>
+                        </Grid>
+                    </Grid>
+                </Card>
+                
+                {/* Username Change */}
+                <Card sx={{m: '10px'}}>
+                    <CardHeader
+                            subheader="Edit Username"
+                            action={
+                                <IconButton aria-label="edit">
+                                    <EditRoundedIcon/>
+                                </IconButton>
+                            }
+                    />
+                    <Grid container sx={{m: '10px', p: '10px'}}>
+                        <Grid item xs={6}>
+                            <Typography variant="h5">Username:</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant="subtitle2">Username:</Typography>
+                            <Typography variant="h5">@slim_shady</Typography>
                         </Grid>
+                    </Grid>
+                </Card>
+                
+                {/* Bio Change */}
+                <Card sx={{m: '10px'}}>
+                    <CardHeader
+                            subheader="Edit Bio"
+                            action={
+                                <IconButton aria-label="edit">
+                                    <EditRoundedIcon/>
+                                </IconButton>
+                            }
+                    />
+                    <Grid container sx={{m: '10px', p: '10px'}}>
                         <Grid item xs={6}>
-                            <Typography>@slim_shady</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant="subtitle2">Bio:</Typography>
+                            <Typography variant="h5">Bio:</Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <Typography
+                                variant="h5"
                                 noWrap
                             >
-                                Who dress like me, walk talk and act like me
-                                And just might be, the next best thing, but not quite me
+                                Lorem ipsum dolor sit amet.
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Card>
+
+                <Divider sx={{ m: '25px 0 25px 0' }}/>
+                
+                {/* Email & Password Change */}
+                <Card sx={{m: '10px'}}>
+                    <CardHeader
+                            subheader="Privacy & Security Settings"
+                            action={
+                                <IconButton aria-label="edit">
+                                    <EditRoundedIcon/>
+                                </IconButton>
+                            }
+                    />
+                    <Grid container sx={{m: '10px', p: '10px'}}>
+                        <Grid item xs={6}>
+                            <Typography variant="h5">Email:</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography
+                                variant="h5"
+                                noWrap
+                            >
+                                abc@xyz.com
                             </Typography>
                         </Grid>
 
+                        <Grid item xs={6}>
+                            <Typography variant="h5">Password:</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography
+                                variant="h5"
+                                noWrap
+                            >
+                                *******
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Card>
+
             </Box>
         </Box>
     );
