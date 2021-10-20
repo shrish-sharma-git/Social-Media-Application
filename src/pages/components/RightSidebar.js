@@ -40,11 +40,11 @@ const RightSidebar = () => {
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: '#1976D2'}}>
-            SS
+            AR
           </Avatar>
         }
-        title="Slim Shady"
-        subheader="@slim_shady"
+        title="Abigail Roberts"
+        subheader="@abigail"
         action={
           <Button>Follow</Button>
         }
@@ -54,11 +54,25 @@ const RightSidebar = () => {
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: '#1976D2'}}>
-            SS
+            JS
           </Avatar>
         }
-        title="Slim Shady"
-        subheader="@slim_shady"
+        title="Jason Smith"
+        subheader="@jason"
+        action={
+          <Button>Follow</Button>
+        }
+      />
+      </Card>
+      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
+      <CardHeader
+        avatar={
+          <Avatar sx={{bgcolor: '#1976D2'}}>
+            RM
+          </Avatar>
+        }
+        title="Rose Mary"
+        subheader="@rose"
         action={
           <Button>Follow</Button>
         }

@@ -88,11 +88,11 @@ function Home(props) {
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
-                  R
+                  A
                 </Avatar>
               }
-              title="Dr. Dre"
-              subheader="September 14, 2016"
+              title="Abigail Roberts"
+              subheader="September 19, 2016"
             />
             <CardMedia
               component="img"
@@ -102,9 +102,7 @@ function Home(props) {
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to cook
-                together with your guests. Add 1 cup of frozen peas along with the mussels,
-                if you like.
+                Tlorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, delectus.
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -115,7 +113,7 @@ function Home(props) {
                 variant="subtitle2"
                 color="gray"
               >
-                1k
+                1000
               </Typography>
             </CardActions>
           </Card>
@@ -124,10 +122,10 @@ function Home(props) {
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
-                  R
+                  J
                 </Avatar>
               }
-              title="Dr. Dre"
+              title="Jason Smith"
               subheader="September 14, 2016"
             />
             <CardMedia
@@ -151,7 +149,7 @@ function Home(props) {
                 variant="subtitle2"
                 color="gray"
               >
-                1k
+                145
               </Typography>
             </CardActions>
           </Card>
@@ -160,10 +158,10 @@ function Home(props) {
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
-                  R
+                  C
                 </Avatar>
               }
-              title="Dr. Dre"
+              title="Chloe Mac"
               subheader="September 14, 2016"
             />
             <CardMedia
@@ -187,7 +185,7 @@ function Home(props) {
                 variant="subtitle2"
                 color="gray"
               >
-                1k
+                2400
               </Typography>
             </CardActions>
           </Card>

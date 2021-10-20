@@ -19,13 +19,13 @@ const Profile = () => {
                             <Typography
                                 variant="h6"
                             >
-                                ABC XYZ
+                                John Doe
                             </Typography>
                             <Typography
                                 variant='caption'
                                 sx={{fontSize: 16}}
                             >
-                                @slim_shady
+                                @johndoe
                             </Typography>
                         </Grid>
                         <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px' }}>
@@ -49,7 +49,7 @@ const Profile = () => {
                             <Typography
                                 variant="h6"
                             >
-                                69   
+                                1  
                             </Typography>
                         </Grid>
                     </Grid>
