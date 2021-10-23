@@ -12,7 +12,7 @@ const PostModal = ({selectedImg, setSelectedImage }) => {
         <div className="backdrop" onClick={handleClick}>
             <img 
                 src={selectedImg}
-                alt="Post Image"
+                alt=""
             />
         </div>
     );

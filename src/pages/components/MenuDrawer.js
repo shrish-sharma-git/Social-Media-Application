@@ -12,7 +12,6 @@ import MenuItems from './MenuItems';
 
 // Drawer Dimensions
 const drawerWidth = 240;
-const rightDrawerWidth = 400;
 
 function MenuDrawer(props) {
 
