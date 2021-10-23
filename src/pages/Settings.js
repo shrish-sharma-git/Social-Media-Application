@@ -1,4 +1,4 @@
-import { Avatar, Card, CardHeader, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Avatar, Button, Card, CardHeader, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import MenuDrawer from './components/MenuDrawer';
@@ -15,7 +15,7 @@ const Settings = () => {
                     <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
                         <IconButton>
                             <Avatar
-                                src="https://i.ibb.co/bBWdJJb/452ea912ad7d9a12e707b9aab4deba3e.jpg"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb1Vhn8SZVQpSdij5JRfhM5XcePLTYcZJTAA&usqp=CAU"
                                 sx={{ height: 200, width: 200, "&:hover, &.Mui-focusVisible": {zIndex: 1}, "& .MuiImageBackdrop-root": {opacity: 0.15}, "& .MuiImageMarked-root": {opacity: 0}, "& .MuiTypography-root": {border: '10px solid currentColor'} }}
                             />
                         </IconButton>
@@ -125,6 +125,25 @@ const Settings = () => {
                             >
                                 *******
                             </Typography>
+                        </Grid>
+                    </Grid>
+                </Card>
+
+                <Divider sx={{ m: '25px 0 25px 0' }}/>                
+
+                {/* Sign Out */}
+                <Card sx={{m: '10px'}}>
+                    <CardHeader
+                            subheader="Log Out"
+                    />
+                    <Grid container sx={{m: '10px', p: '10px'}}>
+                        <Grid item xs={12}>
+                            <Button
+                                variant="contained"
+                                color="error"
+                            >
+                                Log Out
+                            </Button>
                         </Grid>
                     </Grid>
                 </Card>

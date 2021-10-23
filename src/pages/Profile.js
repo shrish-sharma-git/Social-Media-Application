@@ -1,4 +1,3 @@
-import { InfoRounded } from '@mui/icons-material';
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Divider, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
@@ -8,7 +7,7 @@ import PostModal from './components/PostModal';
 const Profile = () => {
     // Post Modal State Handling
     const [selectedImg, setSelectedImage] = useState(null);
-    
+
     return (  
         <Box>
             <MenuDrawer />
@@ -17,7 +16,7 @@ const Profile = () => {
                     <Grid container>    
                         <Grid item xs={6}> 
                             <Avatar
-                                src="https://i.ibb.co/bBWdJJb/452ea912ad7d9a12e707b9aab4deba3e.jpg"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb1Vhn8SZVQpSdij5JRfhM5XcePLTYcZJTAA&usqp=CAU"
                                 sx={{ height: 110, width: 110 }}
                             />
                             <Typography

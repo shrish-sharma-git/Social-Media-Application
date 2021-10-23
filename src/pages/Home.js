@@ -5,9 +5,9 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, TextField } from '@mui/material';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Input, TextField } from '@mui/material';
 import RightSidebar from './components/RightSidebar';
-import { FavoriteRounded } from '@mui/icons-material';
+import { FavoriteRounded, PhotoCamera } from '@mui/icons-material';
 import MenuDrawer from './components/MenuDrawer';
 
 function Home(props) {
