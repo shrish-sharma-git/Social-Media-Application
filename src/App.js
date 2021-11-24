@@ -5,10 +5,12 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-      <Router>
+      <Router> 
+        <AuthProvider>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/Login' component={Login} />
@@ -16,6 +18,7 @@ function App() {
             <Route path='/Profile' component={Profile} />
             <Route path='/Settings' component={Settings} />
           </Switch>
+        </AuthProvider>
       </Router>
   );
 }

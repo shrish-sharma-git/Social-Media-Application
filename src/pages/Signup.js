@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
+import { useAuth } from '../context/AuthContext';
 
 function Copyright(props) {
   return (
@@ -50,10 +51,35 @@ export default function Signup() {
           }),
         [prefersDarkMode],
     );
-    
-    const handleSubmit = (e) => {
+
+  // References 
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+  
+  const { signup } = useAuth();
+
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+      
+  async function handleSubmit(e) {
     e.preventDefault();
-  };
+
+    if(passwordRef.current.value !== passwordConfirmRef.current.value) {
+      return setError("Passwords do not match");
+    }
+
+    try {
+      setError('');
+      setLoading(true);
+      await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
+    } catch {
+      setError('Failed to create an account');
+    }
+    setLoading(false);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,6 +99,16 @@ export default function Signup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
+          { error && 
+            <Typography
+              variant="caption"
+              color="red"
+            >
+              {error}
+            </Typography> 
+          }
+
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -80,6 +116,7 @@ export default function Signup() {
                   autoComplete="fname"
                   name="firstName"
                   required
+                  inputRef={firstNameRef}
                   fullWidth
                   id="firstName"
                   label="First Name"
@@ -90,6 +127,7 @@ export default function Signup() {
                 <TextField
                   required
                   fullWidth
+                  inputRef={lastNameRef}
                   id="lastName"
                   label="Last Name"
                   name="lastName"
@@ -100,6 +138,7 @@ export default function Signup() {
                 <TextField
                   required
                   fullWidth
+                  inputRef={emailRef}
                   id="email"
                   label="Email"
                   name="email"
@@ -109,6 +148,7 @@ export default function Signup() {
               <Grid item xs={12}>
                 <TextField
                   required
+                  inputRef={passwordRef}
                   fullWidth
                   name="password"
                   label="Password"
@@ -117,10 +157,23 @@ export default function Signup() {
                   autoComplete="new-password"
                 />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  inputRef={passwordConfirmRef}
+                  fullWidth
+                  name="confirm password"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirm-password"
+                  autoComplete="new-password"
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
+              disabled={loading}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
