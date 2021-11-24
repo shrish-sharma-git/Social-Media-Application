@@ -1,10 +1,28 @@
 import { Avatar, Button, Card, CardHeader, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useState } from 'react';
 import MenuDrawer from './components/MenuDrawer';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import { useHistory } from 'react-router';
+import { useAuth } from '../context/AuthContext';
 
 const Settings = () => {
+    const [error, setError] = useState('');
+    const { currentUser, logout } = useAuth();
+
+    const history = useHistory();
+
+    async function handleLogout() {
+        setError('');
+
+        try {
+            await logout();
+            history.push('/login')
+        } catch {
+            setError('Failed to Logout');
+        }
+    }
+
     return (  
         <Box>
             <MenuDrawer />
@@ -141,6 +159,7 @@ const Settings = () => {
                             <Button
                                 variant="contained"
                                 color="error"
+                                onClick={handleLogout}
                             >
                                 Log Out
                             </Button>
