@@ -6,17 +6,18 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './pages/components/PrivateRoute';
 
 function App() {
   return (
       <Router> 
         <AuthProvider>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <PrivateRoute exact path='/' component={Home} />
             <Route path='/Login' component={Login} />
             <Route path='/Signup' component={Signup} />
-            <Route path='/Profile' component={Profile} />
-            <Route path='/Settings' component={Settings} />
+            <PrivateRoute path='/Profile' component={Profile} />
+            <PrivateRoute path='/Settings' component={Settings} />
           </Switch>
         </AuthProvider>
       </Router>
