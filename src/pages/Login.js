@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,8 +10,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
+import { useAuth } from '../context/AuthContext';
 
 function Copyright(props) {
   return (
@@ -52,9 +53,27 @@ export default function Login() {
     );
     
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
+  const emailRef = useRef();
+  const passwordRef = useRef()
+  const { login } = useAuth()
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
+  
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      setError("")
+      setLoading(true)
+      await login(emailRef.current.value, passwordRef.current.value)
+      history.push("/")
+    } catch {
+      setError("Failed to log in")
+    }
+
+    setLoading(false)
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -90,11 +109,22 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Welcome Back, Sign in
             </Typography>
+
+            { error && 
+              <Typography
+                variant="caption"
+                color="red"
+              >
+                {error}
+              </Typography> 
+            }
+
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
+                inputRef={emailRef}
                 id="email"
                 label="Email"
                 name="email"
@@ -105,6 +135,7 @@ export default function Login() {
                 margin="normal"
                 required
                 fullWidth
+                inputRef={passwordRef}
                 name="password"
                 label="Password"
                 type="password"
@@ -113,6 +144,7 @@ export default function Login() {
               />
               <Button
                 type="submit"
+                disabled={loading}
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}

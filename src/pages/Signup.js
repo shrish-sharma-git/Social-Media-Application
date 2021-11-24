@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { useAuth } from '../context/AuthContext';
 
@@ -63,6 +63,7 @@ export default function Signup() {
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
       
   async function handleSubmit(e) {
     e.preventDefault();
@@ -75,6 +76,7 @@ export default function Signup() {
       setError('');
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
+      history.push('/')
     } catch {
       setError('Failed to create an account');
     }
