@@ -153,7 +153,7 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" className={classes.linkDesign} variant="body2">
+                  <Link to="/ForgotPassword" className={classes.linkDesign} variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>

@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import ForgotPassword from './pages/ForgotPassword';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './pages/components/PrivateRoute';
 
@@ -18,6 +19,7 @@ function App() {
             <Route path='/Signup' component={Signup} />
             <PrivateRoute path='/Profile' component={Profile} />
             <PrivateRoute path='/Settings' component={Settings} />
+            <Route path='/ForgotPassword' component={ForgotPassword} />
           </Switch>
         </AuthProvider>
       </Router>
