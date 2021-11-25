@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
+import { firestore } from '../firebase';
 
 import { auth } from '../firebase';
 
@@ -17,7 +18,13 @@ export function AuthProvider({ children }) {
     function signup(email, password, firstName, lastName) {
         return auth.createUserWithEmailAndPassword(
             email, password
-        );
+        ).then(resp => {
+            return firestore.collection('users').doc(resp.user.uid).set({
+                firstName: firstName,
+                lastName: lastName,
+                initials: firstName[0] + lastName[0]
+            });
+        })
     }
 
     function login(email, password) {
