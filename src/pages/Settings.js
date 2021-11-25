@@ -5,7 +5,9 @@ import MenuDrawer from './components/MenuDrawer';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useHistory } from 'react-router';
 import { useAuth } from '../context/AuthContext';
-import { firestore } from '../firebase';
+import { firestore, storage } from '../firebase';
+import { AddAPhoto } from '@material-ui/icons';
+import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 
 const Settings = () => {
     const [error, setError] = useState('');
@@ -88,10 +90,21 @@ const Settings = () => {
     const handleCloseBio = () => setOpenBio(false);
 
     // Modal (Username Change)
+    const [query, setQuery] = useState([]);
     function handleUsernameChangeSubmit(e) {
         e.preventDefault();
         setLoading(true);
         setError("");   
+        
+        try {
+            firestore.collection('users').doc(currentUser.uid).update({
+                username: usernameRef.current.value
+            })
+            setLoading(false);
+            handleCloseUsername();
+        } catch(err) {
+            setError("Failed to update username")
+        }
     }
 
     // Modal (Username Change)
@@ -161,6 +174,56 @@ const Settings = () => {
         }
     }
 
+    // Allowed File Types
+    const types = ['image/png', 'image/jpeg'];
+
+    // State
+    const [file, setFile] = useState(null);
+    const [progress, setProgress] = useState(0);
+
+    // Upload Profile Picture
+    function profileImageChangeHandler(e) {
+        e.preventDefault();
+
+        const file = e.target[0].files[0];
+        uploadImage(file);
+        // let selected = e.target.files[0];
+
+        // if(selected && types.includes(selected.type)) {
+        //     setFile(selected);
+        //     uploadImage(file);
+        //     setError('');
+        // } else {
+        //     setFile(null);
+        //     setError("Please Select an image file (PNG or JPEG)")
+        // }
+    }
+
+    const uploadImage = (file) => {
+        if (!file) return;
+        const sotrageRef = ref(storage, `profileImages/${file.name}`);
+        const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+            const prog = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgress(prog);
+            },
+            (error) => console.log(error),
+            () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log("File available at", downloadURL);
+                firestore.collection('users').doc(currentUser.uid).update({
+                    profileImageURL: downloadURL
+                })
+            });
+            }
+        );   
+    }
+
     return (
         <Box>
             <MenuDrawer />
@@ -169,12 +232,22 @@ const Settings = () => {
                 {/* Profile Picture Change */}
                 <Grid container sx={{m: '10px'}}>
                     <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
-                        <IconButton>
+                            {/* <input type="file" hidden onSubmit={profileImageChangeHandler}/>
+                            <button type="submit">Upload</button> */}
+                            {/* <IconButton
+                                type="submit"
+                            > 
+                                <AddAPhoto/>
+                            </IconButton> */}
+                            <form onSubmit={profileImageChangeHandler}>
+                                <input type="file"/>
+                                <button type="submit">Upload</button>
+                            </form>
+                            { error && <Typography variant="caption" color="red">{error}</Typography> }
                             <Avatar
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb1Vhn8SZVQpSdij5JRfhM5XcePLTYcZJTAA&usqp=CAU"
+                                src={userData.profileImageURL}
                                 sx={{ height: 200, width: 200, "&:hover, &.Mui-focusVisible": {zIndex: 1}, "& .MuiImageBackdrop-root": {opacity: 0.15}, "& .MuiImageMarked-root": {opacity: 0}, "& .MuiTypography-root": {border: '10px solid currentColor'} }}
                             />
-                        </IconButton>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle2" sx={{textAlign: 'center'}}>Edit Profile Picture</Typography>
@@ -270,7 +343,7 @@ const Settings = () => {
                             <Typography variant="h5">Username:</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant="h5">@slim_shady</Typography>
+                            <Typography variant="h5">@{userData.username}</Typography>
                         </Grid>
                     </Grid>
                 </Card>
@@ -289,7 +362,17 @@ const Settings = () => {
                         <Typography id="transition-modal-title" variant="h6" component="h2">
                             Edit Username
                         </Typography>
-                        <Box component="form" noValidate onSubmit={handleBioChangeSubmit} sx={{ mt: 1 }}>
+
+                        {error && 
+                            <Typography
+                                variant="caption"
+                                color="red"
+                            >
+                                {error}
+                            </Typography>
+                        }
+
+                        <Box component="form" noValidate onSubmit={handleUsernameChangeSubmit} sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
                                 required
