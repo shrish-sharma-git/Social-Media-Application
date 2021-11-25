@@ -1,12 +1,34 @@
 import { Avatar, Button, Divider, Grid, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { firestore } from '../firebase';
 import MenuDrawer from './components/MenuDrawer';
 import PostModal from './components/PostModal';
 
 const Profile = () => {
     // Post Modal State Handling
     const [selectedImg, setSelectedImage] = useState(null);
+
+    // Fetching Firestore Data
+    const { currentUser } = useAuth();
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+        try {
+            const data = firestore.collection('users').doc(currentUser.uid)
+            .get()
+            .then((snap) => {
+               console.log(snap.data());
+               setUserData(snap.data())
+            })
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }, [])
+
+    console.log(userData);
 
     return (  
         <Box>
@@ -16,19 +38,19 @@ const Profile = () => {
                     <Grid container>    
                         <Grid item xs={6}> 
                             <Avatar
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb1Vhn8SZVQpSdij5JRfhM5XcePLTYcZJTAA&usqp=CAU"
+                                src={userData.profileImageURL}
                                 sx={{ height: 110, width: 110 }}
                             />
                             <Typography
                                 variant="h6"
                             >
-                                John Doe
+                                {userData.firstName} {userData.lastName}
                             </Typography>
                             <Typography
                                 variant='caption'
                                 sx={{fontSize: 16}}
                             >
-                                @johndoe
+                                @{userData.username}
                             </Typography>
                         </Grid>
                         <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px' }}>
@@ -59,7 +81,7 @@ const Profile = () => {
 
                     <Grid container sx={{mt: '10px'}}>
                         <Grid item xs={12}>
-                            Lorem ipsum dolor sit amet.
+                            {userData.bio}
                         </Grid>    
                     </Grid>
 
