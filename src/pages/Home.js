@@ -9,11 +9,99 @@ import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, 
 import RightSidebar from './components/RightSidebar';
 import { FavoriteRounded } from '@mui/icons-material';
 import MenuDrawer from './components/MenuDrawer';
+import { useAuth } from '../context/AuthContext';
+import { firestore, storage } from '../firebase';
+import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
+import moment from 'moment';
 
 function Home(props) {
-  const handleSubmit = (e) => {
+
+  // Fetching Firestore User Data
+  const { currentUser } = useAuth();
+  const [userData, setUserData] = React.useState({});
+
+  React.useEffect(() => {
+      try {
+          const data = firestore.collection('users').doc(currentUser.uid)
+          .get()
+          .then((snap) => {
+             console.log(snap.data());
+             setUserData(snap.data())
+          })
+      }
+      catch(err) {
+          console.log(err);
+      }
+  }, [])
+
+  console.log(userData);
+
+  // Fetching Firestore Posts Data
+  const [postData, setPostData] = React.useState([]);
+
+  React.useEffect(() => {
+    try {
+      const data = firestore.collection('users')
+      .onSnapshot(snap => {
+        let documents = [];
+        snap.forEach(doc => {
+          documents.push({...doc.data(), id: doc.id});
+        });
+        setPostData(documents);
+      })
+    }
+    catch(err) {
+        console.log(err);
+    }
+  }, [])
+
+  console.log(postData)
+
+  // Post Uploading
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  const [progress, setProgress] = React.useState(0);
+  // const [file, setFile] = React.useState(null);
+
+  const postTextRef = React.useRef();
+
+  function postSubmitHandler(e) {
     e.preventDefault();
-    console.log('Post Posted!');
+
+    const input = e.target.querySelector("input[type='file']");
+    const file = input.files[0];
+
+    console.log(file)
+
+    if (!file) return;
+    const sotrageRef = ref(storage, `posts/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+    uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+        const prog = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+        },
+        (error) => console.log(error),
+        () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            firestore.collection('users').doc(currentUser.uid)
+            .update({
+              posts: {
+                  imageURL: downloadURL,
+                  caption: postTextRef.current.value,
+                  postedAt: new Date(),
+                  likes: 0
+              }
+            })
+        });
+       }
+    ); 
   }
 
   return (
@@ -25,50 +113,49 @@ function Home(props) {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
           <Card sx={{ margin: {xs: '0px 0px 15px'}, padding: {xs: '15px'} }}>
-            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-              <Avatar sx={{ backgroundColor: '#1976D2', marginBottom: '10px' }}>
-                SS
-              </Avatar>
+            {/* <form onSubmit={postSubmitHandler}>
+              <Avatar sx={{ backgroundColor: '#1976D2', marginBottom: '10px'}} src={userData.profileImageURL} />                
               <TextField
                 sx={{ marginBottom:'15px'}}
                 placeholder="Share Something..."
                 multiline
                 fullWidth
+                inputRef={postTextRef}
                 variant="filled"
               />
-              <Button
-                type="submit"
-                sx={{ marginLeft: { xs:'79%', sm: '91%' } }}
-                variant="contained"
-              >
-                Post
-              </Button>
+              <input type="file"/>
+              <button type="submit">Upload</button>
+            </form> */}
+
+            <form onSubmit={postSubmitHandler}>
+                <input type="text" ref={postTextRef}/>
+                <input type="file"/>
+                <button type="submit">Upload</button>
             </form>
           </Card>
           
           <Divider />
           
-          <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}  }}>
+          {postData && postData.map(doc => (
+            <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'} }} key={doc.id}>
             <CardHeader
               avatar={
-                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
-                  R
-                </Avatar>
+                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe" 
+                  src={doc.profileImageURL}
+                />
               }
-              title="Dr. Dre"
-              subheader="September 14, 2016"
+              title={doc.firstName + " " + doc.lastName}
+              subheader={moment(doc.postedAt).startOf('hour').fromNow()}
             />
             <CardMedia
               component="img"
               height="194"
-              image="https://images.unsplash.com/photo-1551782450-a2132b4ba21d"
+              image={doc.posts.imageURL}
               alt="Post"
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to cook
-                together with your guests. Add 1 cup of frozen peas along with the mussels,
-                if you like.
+                {doc.posts.caption}
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -79,119 +166,14 @@ function Home(props) {
                 variant="subtitle2"
                 color="gray"
               >
-                1k
+                {doc.posts.likes}
               </Typography>
             </CardActions>
-          </Card>
-
-          <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}  }}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
-                  A
-                </Avatar>
-              }
-              title="Abigail Roberts"
-              subheader="September 19, 2016"
-            />
-            <CardMedia
-              component="img"
-              height="194"
-              image="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62"
-              alt="Post"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                Tlorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, delectus.
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteRounded />
-              </IconButton>
-              <Typography
-                variant="subtitle2"
-                color="gray"
-              >
-                1000
-              </Typography>
-            </CardActions>
-          </Card>
-
-          <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}   }}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
-                  J
-                </Avatar>
-              }
-              title="Jason Smith"
-              subheader="September 14, 2016"
-            />
-            <CardMedia
-              component="img"
-              height="194"
-              image="https://images.unsplash.com/photo-1567306301408-9b74779a11af"
-              alt="Post"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to cook
-                together with your guests. Add 1 cup of frozen peas along with the mussels,
-                if you like.
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteRounded />
-              </IconButton>
-              <Typography
-                variant="subtitle2"
-                color="gray"
-              >
-                145
-              </Typography>
-            </CardActions>
-          </Card>
-
-          <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}   }}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
-                  C
-                </Avatar>
-              }
-              title="Chloe Mac"
-              subheader="September 14, 2016"
-            />
-            <CardMedia
-              component="img"
-              height="194"
-              image="https://images.unsplash.com/photo-1533827432537-70133748f5c8"
-              alt="Post"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to cook
-                together with your guests. Add 1 cup of frozen peas along with the mussels,
-                if you like.
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteRounded />
-              </IconButton>
-              <Typography
-                variant="subtitle2"
-                color="gray"
-              >
-                2400
-              </Typography>
-            </CardActions>
-          </Card>
+            </Card>
+          ))}
 
       </Box>
-      <RightSidebar />    
+      <RightSidebar/>    
     </Box>
   );
 }

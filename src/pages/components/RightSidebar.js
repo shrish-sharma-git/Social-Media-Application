@@ -4,10 +4,32 @@ import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Avatar, Button, Card, CardHeader } from '@mui/material';
+import { useAuth } from '../../context/AuthContext';
+import { firestore } from '../../firebase';
 
 const rightDrawerWidth = 400;
 
 const RightSidebar = () => {
+  // Fetching Users
+  const { currentUser } = useAuth();
+  const [users, setUsers] = React.useState([]);
+
+  React.useEffect(() => {
+      try {
+          const data = firestore.collection('users')
+            .onSnapshot(snap => {
+              let documents = [];
+              snap.forEach(doc => {
+                documents.push({...doc.data(), id: doc.id});
+              });
+              setUsers(documents);
+            })
+      }
+      catch(err) {
+          console.log(err);
+      }
+  }, [])
+
     return (  
       <Box
       sx={{ width: { sm: rightDrawerWidth }, flexShrink: { sm: 0 }, display: { xs: 'none', sm: 'block' } }}>
@@ -22,63 +44,22 @@ const RightSidebar = () => {
         People you may know  
       </Typography>  
 
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            SS
-          </Avatar>
-        }
-        title="Slim Shady"
-        subheader="@slim_shady"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            AR
-          </Avatar>
-        }
-        title="Abigail Roberts"
-        subheader="@abigail"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            JS
-          </Avatar>
-        }
-        title="Jason Smith"
-        subheader="@jason"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            RM
-          </Avatar>
-        }
-        title="Rose Mary"
-        subheader="@rose"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      
+      {users && users.map(doc => (
+        <Card sx={{ margin: '25px', padding: '25px 0px' }} key={doc.id}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{bgcolor: '#1976D2'}}
+              src={doc.profileImageURL}
+            />              
+          }
+          title={doc.firstName + " " + doc.lastName}
+          subheader={doc.username}
+          action={
+            <Button>Follow</Button>
+          }
+        />
+        </Card>
+      ))}
     </div>
     </Box>
     );
