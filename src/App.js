@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import ForgotPassword from './pages/ForgotPassword';
 import { AuthProvider } from './context/AuthContext';

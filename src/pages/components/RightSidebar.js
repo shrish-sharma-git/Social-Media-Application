@@ -45,7 +45,7 @@ const RightSidebar = () => {
         textAlign="center"
       >
         People you may know  
-      </Typography>  ()
+      </Typography> 
 
       {users && users.map(doc => (
         <Card sx={{ margin: '25px', padding: '25px 0px' }} key={doc.id}>

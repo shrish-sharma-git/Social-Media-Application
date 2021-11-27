@@ -75,7 +75,7 @@ function MenuDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            SSS - Social Media
+            Social Media 
           </Typography>
         </Toolbar>
       </AppBar>

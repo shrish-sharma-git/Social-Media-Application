@@ -106,7 +106,7 @@ const UserProfile = () => {
                         </Grid>    
                     </Grid>
 
-                    <Divider sx={{m: '10px 0 10px 0'}} />
+                    {/* <Divider sx={{m: '10px 0 10px 0'}} />
 
                     <Grid container>
                         <Grid item xs={12}>
@@ -117,7 +117,7 @@ const UserProfile = () => {
                                 Follow
                             </Button>
                         </Grid>    
-                    </Grid>
+                    </Grid> */}
 
                     <Divider sx={{m: '10px 0 10px 0'}} />
 

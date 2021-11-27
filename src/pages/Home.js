@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -25,7 +25,6 @@ function Home(props) {
           const data = firestore.collection('users').doc(currentUser.uid)
           .get()
           .then((snap) => {
-             console.log(snap.data());
              setUserData(snap.data())
           })
       }
@@ -58,25 +57,28 @@ function Home(props) {
   console.log(userDocs);
 
   // Fetching Firestore Posts Data
-  const [postData, setPostData] = React.useState([]);
-
+  const [posts, setPosts] = useState([]);
   React.useEffect(() => {
-    try {
-      userDocs.map(doc => {
-        const data = firestore.collection('users/' + doc.id + '/posts')
-        .get()
-        .then((snap) => {
-          console.log(snap.docs.map(doc => doc.data())
-          )
+      try {
+        var postsQuery = firestore.collectionGroup('posts');
+        postsQuery.onSnapshot((snap) => {
+          let documents = [];
+          snap.forEach((doc) => {
+            // const parent = doc.ref.parent.parent;
+            // console.log("parent path:", doc.ref.parent.parent.path);
+            documents.push({...doc.data(), id: doc.id});
+            console.log(doc.id, '=>', doc.data())
+            console.log(documents)
+          })
+          setPosts(documents)
         })
-      })
-    }
-    catch(err) {
-        console.log(err);
-    }
-  }, [])
+      }  
+      catch(err) {
+          console.log(err);
+      }
+    }, [])
 
-  console.log(postData)
+    console.log(posts, typeof(posts))
 
   // Post Uploading
   const [error, setError] = React.useState('');
@@ -156,7 +158,7 @@ function Home(props) {
           
           <Divider />
           
-          {/* {postData && postData.map(doc => (
+          {posts && posts.map((doc) => (
             <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'} }} key={doc.id}>
             <CardHeader
               avatar={
@@ -170,12 +172,12 @@ function Home(props) {
             <CardMedia
               component="img"
               height="194"
-              image={doc.posts}
+              image={doc.imageURL}
               alt="Post"
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
-                {doc.posts.caption}
+                {doc.caption}
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -186,11 +188,11 @@ function Home(props) {
                 variant="subtitle2"
                 color="gray"
               >
-                {doc.posts.likes}
+                {doc.likes}
               </Typography>
             </CardActions>
             </Card>
-          ))} */}
+          ))}
 
       </Box>
       <RightSidebar/>    

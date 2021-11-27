@@ -79,6 +79,7 @@ const Settings = () => {
             })
             setLoading(false);
             handleCloseBio();
+            history.push('/');
         } catch(err) {
             setError("Failed to update bio")
         }
@@ -102,6 +103,7 @@ const Settings = () => {
             })
             setLoading(false);
             handleCloseUsername();
+            history.push('/');
         } catch(err) {
             setError("Failed to update username")
         }
@@ -125,6 +127,7 @@ const Settings = () => {
             })
             setLoading(false);
             handleCloseName();
+            history.push('/');
         } catch(err) {
             setError("Failed to update Name")
         }
@@ -187,6 +190,7 @@ const Settings = () => {
 
         const file = e.target[0].files[0];
         uploadImage(file);
+        history.push('/');
         // let selected = e.target.files[0];
 
         // if(selected && types.includes(selected.type)) {
