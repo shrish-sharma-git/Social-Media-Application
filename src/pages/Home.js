@@ -135,7 +135,7 @@ function Home(props) {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
           <Card sx={{ margin: {xs: '0px 0px 15px'}, padding: {xs: '15px'} }}>
-            {/* <form onSubmit={postSubmitHandler}>
+            <form onSubmit={postSubmitHandler}>
               <Avatar sx={{ backgroundColor: '#1976D2', marginBottom: '10px'}} src={userData.profileImageURL} />                
               <TextField
                 sx={{ marginBottom:'15px'}}
@@ -146,14 +146,14 @@ function Home(props) {
                 variant="filled"
               />
               <input type="file"/>
-              <button type="submit">Upload</button>
-            </form> */}
+              <Button variant="contained" sx={{ marginLeft: { xs:'70%', sm: '89%' }  }} type="submit">Upload</Button>
+            </form> 
 
-            <form onSubmit={postSubmitHandler}>
+            {/* <form onSubmit={postSubmitHandler}>
                 <input type="text" ref={postTextRef}/>
                 <input type="file"/>
                 <button type="submit">Upload</button>
-            </form>
+            </form> */}
           </Card>
           
           <Divider />
