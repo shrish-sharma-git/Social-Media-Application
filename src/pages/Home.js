@@ -5,14 +5,15 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, TextField } from '@mui/material';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Input, TextField } from '@mui/material';
 import RightSidebar from './components/RightSidebar';
-import { FavoriteRounded } from '@mui/icons-material';
+import { FavoriteRounded, PhotoCamera } from '@mui/icons-material';
 import MenuDrawer from './components/MenuDrawer';
 import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import moment from 'moment';
+import { styled } from '@mui/system';
 
 function Home(props) {
 
@@ -126,6 +127,10 @@ function Home(props) {
     ); 
   }
 
+  // Upload Image Button
+  const Input = styled('input')({
+    display: 'none',
+  });
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -145,7 +150,12 @@ function Home(props) {
                 inputRef={postTextRef}
                 variant="filled"
               />
-              <input type="file"/>
+              <label htmlFor="icon-button-file">
+                <Input type="file" id="icon-button-file"/>
+                <IconButton color="primary" aria-label="upload picture" component="span">
+                  <PhotoCamera fontSize="large"/>
+                </IconButton>
+              </label>
               <Button variant="contained" sx={{ marginLeft: { xs:'70%', sm: '89%' }  }} type="submit">Upload</Button>
             </form> 
 
@@ -167,16 +177,17 @@ function Home(props) {
                 />
               }
               title={doc.firstName + " " + doc.lastName}
-              subheader={moment(doc.postedAt).startOf('hour').fromNow()}
+              subheader={moment(doc.postedAt.toDate()).startOf('hour').fromNow()}
             />
             <CardMedia
               component="img"
-              height="194"
+              height="100%"
+              width="100%"
               image={doc.imageURL}
               alt="Post"
             />
             <CardContent>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="subtitle2" fontSize="large" color="text.secondary">
                 {doc.caption}
               </Typography>
             </CardContent>
