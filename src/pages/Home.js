@@ -36,18 +36,39 @@ function Home(props) {
 
   console.log(userData);
 
+// Fetching Firestore Users Document IDs
+  const [userDocs, setUserDocs] = React.useState([]);
+
+  React.useEffect(() => {
+    try {
+      const data = firestore.collection('users')
+        .onSnapshot(snap => {
+          let docIDs = [];
+          snap.forEach(doc => {
+            docIDs.push({id: doc.id});
+          });
+          setUserDocs(docIDs);
+        })
+    }
+    catch(err) {
+        console.log(err);
+    }
+  }, [])
+
+  console.log(userDocs);
+
   // Fetching Firestore Posts Data
   const [postData, setPostData] = React.useState([]);
 
   React.useEffect(() => {
     try {
-      const data = firestore.collection('users')
-      .onSnapshot(snap => {
-        let documents = [];
-        snap.forEach(doc => {
-          documents.push({...doc.data(), id: doc.id});
-        });
-        setPostData(documents);
+      userDocs.map(doc => {
+        const data = firestore.collection('users/' + doc.id + '/posts')
+        .get()
+        .then((snap) => {
+          console.log(snap.docs.map(doc => doc.data())
+          )
+        })
       })
     }
     catch(err) {
@@ -91,13 +112,12 @@ function Home(props) {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL);
             firestore.collection('users').doc(currentUser.uid)
-            .update({
-              posts: {
-                  imageURL: downloadURL,
-                  caption: postTextRef.current.value,
-                  postedAt: new Date(),
-                  likes: 0
-              }
+            .collection('posts').doc()
+            .set({
+              imageURL: downloadURL,
+              caption: postTextRef.current.value,
+              postedAt: new Date(),
+              likes: 0
             })
         });
        }
@@ -136,7 +156,7 @@ function Home(props) {
           
           <Divider />
           
-          {postData && postData.map(doc => (
+          {/* {postData && postData.map(doc => (
             <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'} }} key={doc.id}>
             <CardHeader
               avatar={
@@ -150,7 +170,7 @@ function Home(props) {
             <CardMedia
               component="img"
               height="194"
-              image={doc.posts.imageURL}
+              image={doc.posts}
               alt="Post"
             />
             <CardContent>
@@ -170,7 +190,7 @@ function Home(props) {
               </Typography>
             </CardActions>
             </Card>
-          ))}
+          ))} */}
 
       </Box>
       <RightSidebar/>    

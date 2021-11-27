@@ -30,6 +30,27 @@ const Profile = () => {
 
     console.log(userData);
 
+
+    const [postData, setPostData] = useState([]);
+    // Fetching postsData
+    React.useEffect(() => {
+        try {
+          const data = firestore.collection('users/'+currentUser.uid+'/posts')
+          .onSnapshot(snap => {
+            let documents = [];
+            snap.forEach(doc => {
+              documents.push({...doc.data(), id: doc.id});
+            });
+            setPostData(documents);
+          })
+        }
+        catch(err) {
+            console.log(err);
+        }
+      }, [])
+    
+    console.log(postData)
+
     return (  
         <Box>
             <MenuDrawer />
@@ -105,18 +126,19 @@ const Profile = () => {
                         <ImageListItem key="Subheader" cols={2}>
                             <ListSubheader sx={{ textAlign: 'center', fontSize:'inherit' }} component="div">My Posts</ListSubheader>
                         </ImageListItem>
-                        {itemData.map((item) => (
-                            <ImageListItem key={item.img}>
+                        {postData.map((item) => (
+                            <ImageListItem key={item.id}>
                             <img
-                                onClick={() => setSelectedImage(item.img)}
-                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                alt={item.title}
+                                onClick={() => setSelectedImage(item.imageURL)}
+                                // src={`${item.imageURL}?w=248&fit=crop&auto=format`}
+                                // srcSet={`${item.imageURL}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                src={item.imageURL}
+                                alt={item.caption}
                                 loading="lazy"
                             />
                             <ImageListItemBar
-                                title={item.title}
-                                subtitle={item.author}
+                                // title={item.title}
+                                subtitle={item.caption}
                                 // actionIcon={
                                 // <IconButton
                                 //     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
@@ -134,80 +156,5 @@ const Profile = () => {
         </Box>
     );
 }
-
-// Dummy Links of images
-const itemData = [
-    {
-      img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-      title: 'Breakfast',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-      rows: 2,
-      cols: 2,
-      featured: true,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-      title: 'Burger',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-      title: 'Camera',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-      title: 'Coffee',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-      title: 'Hats',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-      title: 'Honey',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-      rows: 2,
-      cols: 2,
-      featured: true,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-      title: 'Basketball',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-      title: 'Fern',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-      title: 'Mushrooms',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-      rows: 2,
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-      title: 'Tomato basil',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-      title: 'Sea star',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-      title: 'Bike',
-      author: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, culpa?',
-      cols: 2,
-    },
-];
  
 export default Profile;
