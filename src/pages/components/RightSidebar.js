@@ -6,10 +6,13 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Button, Card, CardHeader } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
 import { firestore } from '../../firebase';
+import { useHistory, Redirect } from 'react-router-dom';
 
 const rightDrawerWidth = 400;
 
 const RightSidebar = () => {
+  const history = useHistory();
+
   // Fetching Users
   const { currentUser } = useAuth();
   const [users, setUsers] = React.useState([]);
@@ -42,7 +45,7 @@ const RightSidebar = () => {
         textAlign="center"
       >
         People you may know  
-      </Typography>  
+      </Typography>  ()
 
       {users && users.map(doc => (
         <Card sx={{ margin: '25px', padding: '25px 0px' }} key={doc.id}>
@@ -50,12 +53,18 @@ const RightSidebar = () => {
           avatar={
             <Avatar sx={{bgcolor: '#1976D2'}}
               src={doc.profileImageURL}
+              onClick={() => history.push({
+                pathname: '/GuestProfile',
+                state: {detail : doc.id}
+              })}
             />              
           }
           title={doc.firstName + " " + doc.lastName}
           subheader={doc.username}
           action={
-            <Button>Follow</Button>
+            <>
+              <Button>Follow</Button>
+            </>
           }
         />
         </Card>

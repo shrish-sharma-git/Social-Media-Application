@@ -8,6 +8,8 @@ import Settings from './pages/Settings';
 import ForgotPassword from './pages/ForgotPassword';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './pages/components/PrivateRoute';
+import UserProfile from './pages/UserProfile';
+import GuestProfile from './pages/GuestProfile';
 
 function App() {
   return (
@@ -17,9 +19,10 @@ function App() {
             <PrivateRoute exact path='/' component={Home} />
             <Route path='/Login' component={Login} />
             <Route path='/Signup' component={Signup} />
-            <PrivateRoute path='/Profile' component={Profile} />
+            <PrivateRoute path='/UserProfile' component={UserProfile} />
             <PrivateRoute path='/Settings' component={Settings} />
             <Route path='/ForgotPassword' component={ForgotPassword} />
+            <Route path='/GuestProfile' component={GuestProfile} />
           </Switch>
         </AuthProvider>
       </Router>

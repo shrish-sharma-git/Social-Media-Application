@@ -18,7 +18,7 @@ const MenuItems = () => {
         {
             text: 'Profile',
             icon: <PersonRoundedIcon />,
-            path: '/Profile'
+            path: '/UserProfile'
         },
         {
             text: 'Settings',
