@@ -12,8 +12,7 @@ import MenuDrawer from './components/MenuDrawer';
 import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
-import moment from 'moment';
-import { shadows, styled } from '@mui/system';
+import { styled } from '@mui/system';
 
 function Home(props) {
 
@@ -61,18 +60,45 @@ function Home(props) {
   const [posts, setPosts] = useState([]);
   React.useEffect(() => {
       try {
-        var postsQuery = firestore.collectionGroup('posts');
-        postsQuery.onSnapshot((snap) => {
+        // var postsQuery = firestore.collectionGroup('posts');
+        // postsQuery.onSnapshot((snap) => {
+        //   let documents = [];
+        //   snap.forEach((doc) => {
+        //     documents.push({...doc.data(), id: doc.id});
+        //     console.log(doc.id, '=>', doc.data())
+        //     console.log(documents)
+        //   })
+        //   setPosts(documents)
+        // })
+        
+        firestore.collection('users')
+        .get()
+        .then((snap) => {
           let documents = [];
           snap.forEach((doc) => {
-            // const parent = doc.ref.parent.parent;
-            // console.log("parent path:", doc.ref.parent.parent.path);
             documents.push({...doc.data(), id: doc.id});
             console.log(doc.id, '=>', doc.data())
             console.log(documents)
           })
-          setPosts(documents)
+          firestore.collectionGroup('posts')
+          .get()
+          .then((snap) => {
+            let documents_1 = [];
+            snap.forEach((doc) => {
+            documents_1.push({...doc.data(), id: doc.id});
+            console.log(doc.id, '=>', doc.data())
+            console.log(documents_1)
+          })
+
+          // Array.prototype.push.apply(documents, documents_1)
+          // const merge = documents_1.map(t1 => ({...t1, ...documents.find(t2 => t2.id === t1.id)}))
+          const finalPosts = merger(documents, documents_1);
+          console.log(finalPosts)
+          setPosts(finalPosts)
+          })
         })
+        
+        
       }  
       catch(err) {
           console.log(err);
@@ -80,6 +106,16 @@ function Home(props) {
     }, [])
 
     console.log(posts, typeof(posts))
+
+    function merger(d, d1) {
+      console.log(d, d1)
+      let res = [];
+      
+      res = d.map((item, i) => Object.assign({}, item, d1[i]))   
+      return res;     
+    }
+
+
 
   // Post Uploading
   const [error, setError] = React.useState('');
@@ -156,7 +192,7 @@ function Home(props) {
                   <PhotoCamera fontSize="large"/>
                 </IconButton>
               </label>
-              <Button variant="contained" sx={{ marginLeft: { xs:'70%', sm: '89%' }  }} type="submit">Upload</Button>
+              <Button variant="contained" sx={{ marginLeft: { xs:'70%', sm: '89%' }  }} type="submit">Post</Button>
             </form> 
 
             {/* <form onSubmit={postSubmitHandler}>
