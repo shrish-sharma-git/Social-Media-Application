@@ -13,7 +13,7 @@ import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import moment from 'moment';
-import { styled } from '@mui/system';
+import { shadows, styled } from '@mui/system';
 
 function Home(props) {
 
@@ -177,7 +177,7 @@ function Home(props) {
                 />
               }
               title={doc.firstName + " " + doc.lastName}
-              subheader={moment(doc.postedAt.toDate()).startOf('hour').fromNow()}
+              // subheader={moment(doc.postedAt.toDate()).startOf('hour').fromNow()}
             />
             <CardMedia
               component="img"

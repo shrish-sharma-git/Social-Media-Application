@@ -21,7 +21,7 @@ function App() {
             <PrivateRoute path='/UserProfile' component={UserProfile} />
             <PrivateRoute path='/Settings' component={Settings} />
             <Route path='/ForgotPassword' component={ForgotPassword} />
-            <Route path='/GuestProfile' component={GuestProfile} />
+            <PrivateRoute path='/GuestProfile' component={GuestProfile} />
           </Switch>
         </AuthProvider>
       </Router>
