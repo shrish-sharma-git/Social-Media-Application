@@ -111,7 +111,7 @@ function Home(props) {
       console.log(d, d1)
       let res = [];
       
-      res = d.map((item, i) => Object.assign({}, item, d1[i]))   
+      res = d1.map((item, i) => Object.assign({}, item, d[i]))   
       return res;     
     }
 
