@@ -22,7 +22,8 @@ export function AuthProvider({ children }) {
             return firestore.collection('users').doc(resp.user.uid).set({
                 firstName: firstName,
                 lastName: lastName,
-                initials: firstName[0] + lastName[0]
+                initials: firstName[0] + lastName[0],
+                uid: resp.user.uid
             });
         })
     }

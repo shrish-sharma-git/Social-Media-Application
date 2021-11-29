@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -13,12 +13,14 @@ import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import { styled } from '@mui/system';
+import moment from 'moment';
 
 function Home(props) {
 
   // Fetching Firestore User Data
   const { currentUser } = useAuth();
   const [userData, setUserData] = React.useState({});
+  const [profilePic, setProfilePic] = useState('');
 
   React.useEffect(() => {
       try {
@@ -35,87 +37,29 @@ function Home(props) {
 
   console.log(userData);
 
-// Fetching Firestore Users Document IDs
-  const [userDocs, setUserDocs] = React.useState([]);
+  // Firestore Fetch Posts
+  const [posts, setPosts] = useState([]);
 
   React.useEffect(() => {
     try {
-      const data = firestore.collection('users')
-        .onSnapshot(snap => {
-          let docIDs = [];
-          snap.forEach(doc => {
-            docIDs.push({id: doc.id});
-          });
-          setUserDocs(docIDs);
+        firestore.collectionGroup('posts')
+        .get()
+        .then((snap) => {
+          let documents_1 = [];
+          snap.forEach((doc) => {
+          documents_1.push({...doc.data(), id: doc.id});
+          console.log(doc.id, '=>', doc.data())
+          console.log(documents_1)
+          setPosts(documents_1)
         })
-    }
+      })      
+    }  
     catch(err) {
         console.log(err);
     }
   }, [])
 
-  console.log(userDocs);
-
-  // Fetching Firestore Posts Data
-  const [posts, setPosts] = useState([]);
-  React.useEffect(() => {
-      try {
-        // var postsQuery = firestore.collectionGroup('posts');
-        // postsQuery.onSnapshot((snap) => {
-        //   let documents = [];
-        //   snap.forEach((doc) => {
-        //     documents.push({...doc.data(), id: doc.id});
-        //     console.log(doc.id, '=>', doc.data())
-        //     console.log(documents)
-        //   })
-        //   setPosts(documents)
-        // })
-        
-        firestore.collection('users')
-        .get()
-        .then((snap) => {
-          let documents = [];
-          snap.forEach((doc) => {
-            documents.push({...doc.data(), id: doc.id});
-            console.log(doc.id, '=>', doc.data())
-            console.log(documents)
-          })
-          firestore.collectionGroup('posts')
-          .get()
-          .then((snap) => {
-            let documents_1 = [];
-            snap.forEach((doc) => {
-            documents_1.push({...doc.data(), id: doc.id});
-            console.log(doc.id, '=>', doc.data())
-            console.log(documents_1)
-          })
-
-          // Array.prototype.push.apply(documents, documents_1)
-          // const merge = documents_1.map(t1 => ({...t1, ...documents.find(t2 => t2.id === t1.id)}))
-          const finalPosts = merger(documents, documents_1);
-          console.log(finalPosts)
-          setPosts(finalPosts)
-          })
-        })
-        
-        
-      }  
-      catch(err) {
-          console.log(err);
-      }
-    }, [])
-
-    console.log(posts, typeof(posts))
-
-    function merger(d, d1) {
-      console.log(d, d1)
-      let res = [];
-      
-      res = d1.map((item, i) => Object.assign({}, item, d[i]))   
-      return res;     
-    }
-
-
+  console.log(posts);
 
   // Post Uploading
   const [error, setError] = React.useState('');
@@ -150,13 +94,16 @@ function Home(props) {
         () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL);
-            firestore.collection('users').doc(currentUser.uid)
-            .collection('posts').doc()
+            firestore.collection('posts').doc()
             .set({
               imageURL: downloadURL,
               caption: postTextRef.current.value,
               postedAt: new Date(),
-              likes: 0
+              userId: currentUser.uid,
+              likes: 0,
+              postFirstName: userData.firstName,
+              postLastName: userData.lastName,
+              postProfilePicture: userData.profileImageURL
             })
         });
        }
@@ -209,11 +156,11 @@ function Home(props) {
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe" 
-                  src={doc.profileImageURL}
+                  src={doc.postProfilePicture}
                 />
               }
-              title={doc.firstName + " " + doc.lastName}
-              // subheader={moment(doc.postedAt.toDate()).startOf('hour').fromNow()}
+              title={doc.postFirstName + " " + doc.postLastName}
+              subheader={moment(doc.postedAt.toDate()).startOf('hour').fromNow()}
             />
             <CardMedia
               component="img"

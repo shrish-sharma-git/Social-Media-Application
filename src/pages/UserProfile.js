@@ -35,13 +35,16 @@ const UserProfile = () => {
     // Fetching postsData
     React.useEffect(() => {
         try {
-          const data = firestore.collection('users/'+currentUser.uid+'/posts')
-          .onSnapshot(snap => {
-            let documents = [];
-            snap.forEach(doc => {
-              documents.push({...doc.data(), id: doc.id});
-            });
-            setPostData(documents);
+          const data = firestore.collection('posts')
+          .where('userId','==', currentUser.uid)
+          .get()
+          .then((snap) => {
+              let documents = [];
+              snap.forEach((doc) => {
+                  console.log(doc.data())
+                  documents.push({...doc.data(), id: doc.id})
+                })
+                setPostData(documents)
           })
         }
         catch(err) {
