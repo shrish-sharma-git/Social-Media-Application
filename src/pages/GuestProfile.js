@@ -38,16 +38,20 @@ const GuestProfile = () => {
 
 
     const [postData, setPostData] = useState([]);
+
     // Fetching postsData
     React.useEffect(() => {
         try {
-          const data = firestore.collection('users/'+guestUid+'/posts')
-          .onSnapshot(snap => {
-            let documents = [];
-            snap.forEach(doc => {
-              documents.push({...doc.data(), id: doc.id});
-            });
-            setPostData(documents);
+          const data = firestore.collection('posts')
+          .where('userId', '==', guestUid)
+          .get()
+          .then((doc) => {
+              let documents = [];
+              doc.forEach((docs) => {
+                  documents.push({...docs.data(), id: docs.id})
+                  console.log(documents)
+                  setPostData(documents)
+              })
           })
         }
         catch(err) {
@@ -112,9 +116,9 @@ const GuestProfile = () => {
                         </Grid>    
                     </Grid>
 
-                    <Divider sx={{m: '10px 0 10px 0'}} />
+                    {/* <Divider sx={{m: '10px 0 10px 0'}} /> */}
 
-                    <Grid container>
+                    {/* <Grid container>
                         <Grid item xs={12}>
                             <Button
                                 variant="contained"
@@ -123,7 +127,7 @@ const GuestProfile = () => {
                                 Follow
                             </Button>
                         </Grid>    
-                    </Grid>
+                    </Grid> */}
 
                     <Divider sx={{m: '10px 0 10px 0'}} />
 

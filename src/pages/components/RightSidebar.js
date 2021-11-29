@@ -33,6 +33,8 @@ const RightSidebar = () => {
       }
   }, [])
 
+  console.log(users)
+
     return (  
       <Box
       sx={{ width: { sm: rightDrawerWidth }, flexShrink: { sm: 0 }, display: { xs: 'none', sm: 'block' } }}>
