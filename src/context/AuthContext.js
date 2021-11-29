@@ -23,7 +23,8 @@ export function AuthProvider({ children }) {
                 firstName: firstName,
                 lastName: lastName,
                 initials: firstName[0] + lastName[0],
-                uid: resp.user.uid
+                uid: resp.user.uid,
+                profileImageURL: "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"
             });
         })
     }

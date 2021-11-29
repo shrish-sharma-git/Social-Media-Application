@@ -44,7 +44,7 @@ const RightSidebar = () => {
         variant="h6"
         textAlign="center"
       >
-        People you may know  
+        Top Users  
       </Typography> 
 
       {users && users.map(doc => (
