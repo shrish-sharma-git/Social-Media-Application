@@ -4,9 +4,8 @@ import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Avatar, Button, Card, CardHeader } from '@mui/material';
-import { useAuth } from '../../context/AuthContext';
 import { firestore } from '../../firebase';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const rightDrawerWidth = 400;
 
@@ -14,12 +13,11 @@ const RightSidebar = () => {
   const history = useHistory();
 
   // Fetching Users
-  const { currentUser } = useAuth();
   const [users, setUsers] = React.useState([]);
 
   React.useEffect(() => {
       try {
-          const data = firestore.collection('users')
+          firestore.collection('users')
             .onSnapshot(snap => {
               let documents = [];
               snap.forEach(doc => {

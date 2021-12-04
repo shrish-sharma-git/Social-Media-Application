@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Grid, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
+import { Avatar, Divider, Grid, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
@@ -16,7 +16,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         try {
-            const data = firestore.collection('users').doc(currentUser.uid)
+            firestore.collection('users').doc(currentUser.uid)
             .get()
             .then((snap) => {
                console.log(snap.data());
@@ -35,7 +35,7 @@ const UserProfile = () => {
     // Fetching postsData
     React.useEffect(() => {
         try {
-          const data = firestore.collection('posts')
+          firestore.collection('posts')
           .where('userId','==', currentUser.uid)
           .get()
           .then((snap) => {

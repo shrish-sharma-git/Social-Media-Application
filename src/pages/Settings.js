@@ -6,7 +6,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useHistory } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
-import { FavoriteRounded, PhotoCamera } from '@mui/icons-material';
+import { PhotoCamera } from '@mui/icons-material';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 
 const Settings = () => {
@@ -18,7 +18,7 @@ const Settings = () => {
 
     useEffect(() => {
         try {
-            const data = firestore.collection('users').doc(currentUser.uid)
+            firestore.collection('users').doc(currentUser.uid)
             .get()
             .then((snap) => {
                console.log(snap.data());
@@ -91,7 +91,6 @@ const Settings = () => {
     const handleCloseBio = () => setOpenBio(false);
 
     // Modal (Username Change)
-    const [query, setQuery] = useState([]);
     function handleUsernameChangeSubmit(e) {
         e.preventDefault();
         setLoading(true);
@@ -177,11 +176,7 @@ const Settings = () => {
         }
     }
 
-    // Allowed File Types
-    const types = ['image/png', 'image/jpeg'];
-
     // State
-    const [file, setFile] = useState(null);
     const [progress, setProgress] = useState(0);
 
     // Upload Profile Picture
@@ -191,16 +186,6 @@ const Settings = () => {
         const file = e.target[0].files[0];
         uploadImage(file);
         history.push('/');
-        // let selected = e.target.files[0];
-
-        // if(selected && types.includes(selected.type)) {
-        //     setFile(selected);
-        //     uploadImage(file);
-        //     setError('');
-        // } else {
-        //     setFile(null);
-        //     setError("Please Select an image file (PNG or JPEG)")
-        // }
     }
 
     const uploadImage = (file) => {

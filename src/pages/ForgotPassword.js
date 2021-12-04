@@ -54,7 +54,6 @@ export default function ForgotPassword() {
     
 
   const emailRef = useRef();
-  const passwordRef = useRef()
   const { resetPassword } = useAuth()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")

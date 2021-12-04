@@ -1,8 +1,7 @@
-import { Avatar, Button, Divider, Grid, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
+import { Avatar, Divider, Grid, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-import { useAuth } from '../context/AuthContext';
 import { firestore } from '../firebase';
 import MenuDrawer from './components/MenuDrawer';
 import PostModal from './components/PostModal';
@@ -12,7 +11,6 @@ const GuestProfile = () => {
     const [selectedImg, setSelectedImage] = useState(null);
 
     // Fetching Firestore Data
-    const { currentUser } = useAuth();
     const [userData, setUserData] = useState({});
 
     const location = useLocation();
@@ -22,7 +20,7 @@ const GuestProfile = () => {
 
     useEffect(() => {
         try {
-            const data = firestore.collection('users').doc(guestUid)
+            firestore.collection('users').doc(guestUid)
             .get()
             .then((snap) => {
                console.log(snap.data());
@@ -32,7 +30,7 @@ const GuestProfile = () => {
         catch(err) {
             console.log(err);
         }
-    }, [])
+    }, [guestUid])
 
     console.log(userData);
 
@@ -42,7 +40,7 @@ const GuestProfile = () => {
     // Fetching postsData
     React.useEffect(() => {
         try {
-          const data = firestore.collection('posts')
+          firestore.collection('posts')
           .where('userId', '==', guestUid)
           .get()
           .then((doc) => {
@@ -84,7 +82,7 @@ const GuestProfile = () => {
                                 @{userData.username}
                             </Typography>
                         </Grid>
-                        <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px' }}>
+                        {/* <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px' }}>
                             <Typography
                                 variant="subtitle2"
                             >
@@ -107,7 +105,7 @@ const GuestProfile = () => {
                             >
                                 1  
                             </Typography>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
 
                     <Grid container sx={{mt: '10px'}}>
