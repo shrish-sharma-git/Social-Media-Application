@@ -1,11 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia } from '@mui/material';
-import { FavoriteRounded } from '@mui/icons-material';
+import { FavoriteBorderRounded, FavoriteRounded } from '@mui/icons-material';
 import moment from 'moment';
+import { firestore } from '../../firebase';
 
 const Post = ({ doc }) => {
+
+    const [like, setLike] = useState(false);
+
+    const handleLikes = () => {
+
+      console.log('liked: ' + doc.id)
+
+      if(like == true) {
+        setLike(false);
+        // firestore.collection('posts')
+        // .doc(doc.id)
+        // .update({
+        //   "likes": "likes"-1
+        // })
+      } else {
+        setLike(true);
+        // firestore.collection('posts')
+        // .doc(doc.id)
+        // .update({
+        //   "likes": "likes"+1
+        // })
+      }
+    }
     return (  
         <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'} }}>
             <CardHeader
@@ -30,15 +54,16 @@ const Post = ({ doc }) => {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteRounded />
+              <IconButton aria-label="add to favorites" onClick={handleLikes}>
+                {like ? <FavoriteRounded /> : <FavoriteBorderRounded /> }
+                
               </IconButton>
-              <Typography
+              {/* <Typography
                 variant="subtitle2"
                 color="gray"
               >
                 {doc.likes}
-              </Typography>
+              </Typography> */}
             </CardActions>
         </Card>
     );
