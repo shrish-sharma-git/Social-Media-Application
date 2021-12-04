@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia } from '@mui/material';
 import { FavoriteBorderRounded, FavoriteRounded } from '@mui/icons-material';
 import moment from 'moment';
-import { firestore } from '../../firebase';
 
 const Post = ({ doc }) => {
 
