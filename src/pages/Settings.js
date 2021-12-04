@@ -180,6 +180,10 @@ const Settings = () => {
     async function handleDeleteAccount() {
         setError('');
 
+        // delete all info of deleted user
+        firestore.collection('users')
+        .doc(currentUser.uid).delete();
+
         try {
             await deleteAccount();
             history.push('/signup');
