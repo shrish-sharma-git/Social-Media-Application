@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
 import { PhotoCamera } from '@mui/icons-material';
+import { styled } from '@mui/system';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 
 const Settings = () => {
@@ -178,6 +179,7 @@ const Settings = () => {
 
     // State
     const [progress, setProgress] = useState(0);
+    const [file, setFile] = useState(null);
 
     // Upload Profile Picture
     function profileImageChangeHandler(e) {
@@ -185,6 +187,7 @@ const Settings = () => {
 
         const file = e.target[0].files[0];
         uploadImage(file);
+        setFile(file);
         history.push('/');
     }
 
@@ -213,18 +216,33 @@ const Settings = () => {
         );   
     }
 
+    // Upload Image Button
+    const Input = styled('input')({
+        display: 'none',
+    });
+
     return (
         <Box>
             <MenuDrawer />
             <Box component="main" sx={{ flexGrow: 1, p: 3, margin: {xs: '50px 0px'}, marginLeft: {sm: '240px'}, marginRight: {sm: '400px'} }}>
 
                 {/* Profile Picture Change */}
-                <Grid container sx={{m: '10px'}}>
-                    <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
+                <Grid container sx={{m: '10px'}}
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                >
+                    <Grid item xs={12}>
+                    <Avatar
+                        src={userData.profileImageURL}
+                        sx={{ height: 200, width: 200 }}
+                    />
+                    </Grid>
+                    <Grid item xs={12} sx={{ m: '10px 0 10px 0' }}>
                             <form onSubmit={profileImageChangeHandler}>
                             <label htmlFor="icon-button-file">
                                 <Input type="file" id="icon-button-file" />
-                                <IconButton color="primary" aria-label="upload picture" component="span">
+                                <IconButton  color="primary" aria-label="upload picture" component="span">
                                     <PhotoCamera fontSize="large"/>
                                 </IconButton>
                             </label>
@@ -232,15 +250,7 @@ const Settings = () => {
                                 Upload
                             </Button>
                             </form>
-                            {/* <form onSubmit={profileImageChangeHandler}>
-                                <input type="file"/>
-                                <button type="submit">Upload</button>
-                            </form> */}
                             { error && <Typography variant="caption" color="red">{error}</Typography> }
-                            <Avatar
-                                src={userData.profileImageURL}
-                                sx={{ height: 200, width: 200, "&:hover, &.Mui-focusVisible": {zIndex: 1}, "& .MuiImageBackdrop-root": {opacity: 0.15}, "& .MuiImageMarked-root": {opacity: 0}, "& .MuiTypography-root": {border: '10px solid currentColor'} }}
-                            />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle2" sx={{textAlign: 'center'}}>Edit Profile Picture</Typography>
