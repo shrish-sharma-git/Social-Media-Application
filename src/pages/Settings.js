@@ -1,4 +1,4 @@
-import { Avatar, Backdrop, Button, Card, CardHeader, Divider, Fade, Grid, IconButton, Modal, TextField, Typography } from '@mui/material';
+import { Avatar, Backdrop, Button, Card, CardHeader, Divider, Fade, Grid, IconButton, Input, Modal, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
 import MenuDrawer from './components/MenuDrawer';
@@ -6,7 +6,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useHistory } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
-import { AddAPhoto } from '@material-ui/icons';
+import { FavoriteRounded, PhotoCamera } from '@mui/icons-material';
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 
 const Settings = () => {
@@ -236,17 +236,21 @@ const Settings = () => {
                 {/* Profile Picture Change */}
                 <Grid container sx={{m: '10px'}}>
                     <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
-                            {/* <input type="file" hidden onSubmit={profileImageChangeHandler}/>
-                            <button type="submit">Upload</button> */}
-                            {/* <IconButton
-                                type="submit"
-                            > 
-                                <AddAPhoto/>
-                            </IconButton> */}
                             <form onSubmit={profileImageChangeHandler}>
+                            <label htmlFor="icon-button-file">
+                                <Input type="file" id="icon-button-file" />
+                                <IconButton color="primary" aria-label="upload picture" component="span">
+                                    <PhotoCamera fontSize="large"/>
+                                </IconButton>
+                            </label>
+                            <Button type="submit" variant="contained">
+                                Upload
+                            </Button>
+                            </form>
+                            {/* <form onSubmit={profileImageChangeHandler}>
                                 <input type="file"/>
                                 <button type="submit">Upload</button>
-                            </form>
+                            </form> */}
                             { error && <Typography variant="caption" color="red">{error}</Typography> }
                             <Avatar
                                 src={userData.profileImageURL}

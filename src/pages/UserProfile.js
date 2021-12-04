@@ -77,7 +77,7 @@ const UserProfile = () => {
                                 @{userData.username}
                             </Typography>
                         </Grid>
-                        <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px' }}>
+                        {/* <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px' }}>
                             <Typography
                                 variant="subtitle2"
                             >
@@ -88,8 +88,8 @@ const UserProfile = () => {
                             >
                                 10m  
                             </Typography>
-                        </Grid>
-                        <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px'  }}>
+                        </Grid> */}
+                        {/* <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px'  }}>
                             <Typography
                                 variant="subtitle2"
                             >
@@ -100,7 +100,7 @@ const UserProfile = () => {
                             >
                                 1  
                             </Typography>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
 
                     <Grid container sx={{mt: '10px'}}>

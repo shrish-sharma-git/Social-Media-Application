@@ -151,7 +151,7 @@ function Home(props) {
           
           <Divider />
           
-          {posts && posts.map((doc) => (
+          {posts.map((doc) => (
             <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'} }} key={doc.id}>
             <CardHeader
               avatar={
