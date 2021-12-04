@@ -12,7 +12,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 
 const Settings = () => {
     const [error, setError] = useState('');
-    const { currentUser, logout, updateEmail, updatePassword } = useAuth();
+    const { currentUser, logout, updateEmail, updatePassword, deleteAccount } = useAuth();
 
     // Fetching Firestore Data
     const [userData, setUserData] = useState({});
@@ -177,6 +177,17 @@ const Settings = () => {
         }
     }
 
+    async function handleDeleteAccount() {
+        setError('');
+
+        try {
+            await deleteAccount();
+            history.push('/signup');
+        } catch {
+            setError('Failed to delete Account');
+        }
+    }
+
     // State
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState(null);
@@ -258,7 +269,7 @@ const Settings = () => {
                 </Grid>
 
                 {/* Name Change */}
-                <Card sx={{m: '10px'}}>
+                <Card sx={{m: '5px'}}>
                     <CardHeader
                         subheader="Edit Name"
                         action={
@@ -420,7 +431,6 @@ const Settings = () => {
                         <Grid item xs={6}>
                             <Typography
                                 variant="h5"
-                                noWrap
                             >
                                 {userData.bio}
                             </Typography>
@@ -585,6 +595,24 @@ const Settings = () => {
                                 onClick={handleLogout}
                             >
                                 Log Out
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Card>
+
+                {/* Delete Account */}
+                <Card sx={{m: '10px'}}>
+                    <CardHeader
+                            subheader="Delete Your Account"
+                    />
+                    <Grid container sx={{m: '10px', p: '10px'}}>
+                        <Grid item xs={12}>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={handleDeleteAccount}
+                            >
+                                Delete Account
                             </Button>
                         </Grid>
                     </Grid>
