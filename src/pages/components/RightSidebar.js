@@ -4,10 +4,35 @@ import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Avatar, Button, Card, CardHeader } from '@mui/material';
+import { firestore } from '../../firebase';
+import { useHistory } from 'react-router-dom';
 
 const rightDrawerWidth = 400;
 
 const RightSidebar = () => {
+  const history = useHistory();
+
+  // Fetching Users
+  const [users, setUsers] = React.useState([]);
+
+  React.useEffect(() => {
+      try {
+          firestore.collection('users')
+            .onSnapshot(snap => {
+              let documents = [];
+              snap.forEach(doc => {
+                documents.push({...doc.data(), id: doc.id});
+              });
+              setUsers(documents);
+            })
+      }
+      catch(err) {
+          console.log(err);
+      }
+  }, [])
+
+  console.log(users)
+
     return (  
       <Box
       sx={{ width: { sm: rightDrawerWidth }, flexShrink: { sm: 0 }, display: { xs: 'none', sm: 'block' } }}>
@@ -19,66 +44,31 @@ const RightSidebar = () => {
         variant="h6"
         textAlign="center"
       >
-        People you may know  
-      </Typography>  
+        Top Users  
+      </Typography> 
 
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            SS
-          </Avatar>
-        }
-        title="Slim Shady"
-        subheader="@slim_shady"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            AR
-          </Avatar>
-        }
-        title="Abigail Roberts"
-        subheader="@abigail"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            JS
-          </Avatar>
-        }
-        title="Jason Smith"
-        subheader="@jason"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      <Card sx={{ margin: '25px', padding: '25px 0px' }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{bgcolor: '#1976D2'}}>
-            RM
-          </Avatar>
-        }
-        title="Rose Mary"
-        subheader="@rose"
-        action={
-          <Button>Follow</Button>
-        }
-      />
-      </Card>
-      
+      {users && users.map(doc => (
+        <Card sx={{ margin: '25px', padding: '25px 0px' }} key={doc.id}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{bgcolor: '#1976D2'}}
+              src={doc.profileImageURL}
+              onClick={() => history.push({
+                pathname: '/GuestProfile',
+                state: {detail : doc.id}
+              })}
+            />              
+          }
+          title={doc.firstName + " " + doc.lastName}
+          subheader={doc.username}
+          action={
+            <>
+              <Button>Follow</Button>
+            </>
+          }
+        />
+        </Card>
+      ))}
     </div>
     </Box>
     );

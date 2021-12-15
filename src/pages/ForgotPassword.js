@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { useAuth } from '../context/AuthContext';
 
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function Login() {
+export default function ForgotPassword() {
     // Styles Hook
     const classes = useStyles();
 
@@ -54,22 +54,22 @@ export default function Login() {
     
 
   const emailRef = useRef();
-  const passwordRef = useRef()
-  const { login } = useAuth()
+  const { resetPassword } = useAuth()
   const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
-  const history = useHistory()
   
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
+      setMessage("")  
       setError("")
       setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+      await resetPassword(emailRef.current.value)
+      setMessage('Check your inbox for reset instructions')
     } catch {
-      setError("Failed to log in")
+      setError("Failed to Reset Password")
     }
 
     setLoading(false)
@@ -107,8 +107,18 @@ export default function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Welcome Back, Sign in
+              Reset Password
             </Typography>
+
+            {
+                message && 
+                <Typography
+                  variant="caption"
+                  color="green"
+                >
+                    {message}
+                </Typography>
+            }
 
             { error && 
               <Typography
@@ -131,7 +141,7 @@ export default function Login() {
                 autoComplete="email"
                 autoFocus
               />
-              <TextField
+              {/* <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -141,7 +151,7 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
+              /> */}
               <Button
                 type="submit"
                 disabled={loading}
@@ -149,12 +159,12 @@ export default function Login() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Reset Password
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link to="/ForgotPassword" className={classes.linkDesign} variant="body2">
-                    Forgot password?
+                  <Link to="/login" className={classes.linkDesign} variant="body2">
+                    Login
                   </Link>
                 </Grid>
                 <Grid item>
