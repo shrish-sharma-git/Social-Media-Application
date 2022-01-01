@@ -55,8 +55,8 @@ function Home() {
           let documents_1 = [];
           snap.forEach((doc) => {
             documents_1.push({...doc.data(), id: doc.id});
-            setPosts(documents_1);
           })
+          setPosts(documents_1);
       })      
   }, [])
 
@@ -153,7 +153,7 @@ function Home() {
           
           <Divider />
           
-          {posts.map(doc => (
+          {posts.map((doc) => (
             <div key={doc.id}>
               <Post doc={doc}/>
             </div>
