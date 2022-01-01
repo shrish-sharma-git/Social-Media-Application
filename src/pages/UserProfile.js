@@ -1,4 +1,6 @@
-import { Avatar, Divider, Grid, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
+import { InfoRounded } from '@material-ui/icons';
+import { DeleteOutlineRounded } from '@mui/icons-material';
+import { Avatar, Divider, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
@@ -54,6 +56,17 @@ const UserProfile = () => {
     
     console.log(postData)
 
+    // Delete Post
+    const deletePost = async (id) => {
+        console.log("Delete Post " + id);
+        await firestore.collection('posts').doc(id).delete()
+            .then(() => {
+                console.log("Post Deleted.");
+                const newPosts = postData.filter(post => post.id != id)
+                setPostData(newPosts);
+            })
+    }
+
     return (  
         <Box>
             <MenuDrawer />
@@ -105,14 +118,15 @@ const UserProfile = () => {
                             <ImageListItemBar
                                 // title={item.title}
                                 subtitle={item.caption}
-                                // actionIcon={
-                                // <IconButton
-                                //     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                //     aria-label={`info about ${item.title}`}
-                                // >
-                                //     <InfoRounded />
-                                // </IconButton>
-                                // }
+                                    actionIcon={
+                                    <IconButton
+                                        sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                        aria-label={`info about ${item.title}`}
+                                        onClick={() => deletePost(item.id)}
+                                    >
+                                        <DeleteOutlineRounded sx={{ color : 'red' }} />
+                                    </IconButton>
+                                    }
                             />
                             </ImageListItem>
                         ))}
