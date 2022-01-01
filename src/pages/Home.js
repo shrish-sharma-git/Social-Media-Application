@@ -40,16 +40,6 @@ function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-        // firestore.collection('posts')
-        // .get()
-        // .then((snap) => {
-        //   let documents_1 = [];
-        //   snap.forEach((doc) => {
-        //   documents_1.push({...doc.data(), id: doc.id});
-        //   console.log(doc.id, '=>', doc.data())
-        //   console.log(documents_1)
-        //   setPosts(documents_1)
-
         firestore.collection('posts')
         .orderBy("postedAt", "desc")
         .onSnapshot((snap) => {

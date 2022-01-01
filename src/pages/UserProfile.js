@@ -77,30 +77,6 @@ const UserProfile = () => {
                                 @{userData.username}
                             </Typography>
                         </Grid>
-                        {/* <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px' }}>
-                            <Typography
-                                variant="subtitle2"
-                            >
-                                Followers  
-                            </Typography>
-                            <Typography
-                                variant="h6"
-                            >
-                                10m  
-                            </Typography>
-                        </Grid> */}
-                        {/* <Grid item xs={3} sx={{ textAlign: 'center', mt: '25px'  }}>
-                            <Typography
-                                variant="subtitle2"
-                            >
-                                Following  
-                            </Typography>
-                            <Typography
-                                variant="h6"
-                            >
-                                1  
-                            </Typography>
-                        </Grid> */}
                     </Grid>
 
                     <Grid container sx={{mt: '10px'}}>
@@ -108,19 +84,6 @@ const UserProfile = () => {
                             {userData.bio}
                         </Grid>    
                     </Grid>
-
-                    {/* <Divider sx={{m: '10px 0 10px 0'}} />
-
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Button
-                                variant="contained"
-                                fullWidth
-                            >
-                                Follow
-                            </Button>
-                        </Grid>    
-                    </Grid> */}
 
                     <Divider sx={{m: '10px 0 10px 0'}} />
 
