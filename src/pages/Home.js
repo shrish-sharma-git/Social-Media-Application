@@ -51,6 +51,7 @@ function Home() {
         //   setPosts(documents_1)
 
         firestore.collection('posts')
+        .orderBy("postedAt", "desc")
         .onSnapshot((snap) => {
           let documents_1 = [];
           snap.forEach((doc) => {
