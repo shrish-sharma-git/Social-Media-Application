@@ -48,8 +48,8 @@ const GuestProfile = () => {
               doc.forEach((docs) => {
                   documents.push({...docs.data(), id: docs.id})
                   console.log(documents)
-                  setPostData(documents)
-              })
+                })
+                setPostData(documents)
           })
         }
         catch(err) {
