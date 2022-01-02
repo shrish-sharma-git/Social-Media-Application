@@ -11,7 +11,7 @@ import UserProfile from './pages/UserProfile';
 import GuestProfile from './pages/GuestProfile';
 
 function App() {
-  return (
+  return (  
       <Router> 
         <AuthProvider>
           <Switch>

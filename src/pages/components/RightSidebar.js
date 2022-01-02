@@ -48,7 +48,7 @@ const RightSidebar = () => {
       </Typography> 
 
       {users && users.map(doc => (
-        <Card sx={{ margin: '25px', padding: '25px 0px' }} key={doc.id}>
+        <Card sx={{ margin: '15px 35px 15px 35px', padding: '10px 0px'}} key={doc.id}>
         <CardHeader
           avatar={
             <Avatar sx={{bgcolor: '#1976D2'}}
@@ -61,11 +61,11 @@ const RightSidebar = () => {
           }
           title={doc.firstName + " " + doc.lastName}
           subheader={doc.username}
-          action={
-            <>
-              <Button>Follow</Button>
-            </>
-          }
+          // action={
+          //   <>
+          //     <Button>Follow</Button>
+          //   </>
+          // }
         />
         </Card>
       ))}

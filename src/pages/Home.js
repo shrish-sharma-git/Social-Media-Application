@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import { Avatar, Button, Card, TextField } from '@mui/material';
 import RightSidebar from './components/RightSidebar';
-import { PhotoCamera } from '@mui/icons-material';
+import { PhotoCamera, UnfoldLess } from '@mui/icons-material';
 import MenuDrawer from './components/MenuDrawer';
 import { useAuth } from '../context/AuthContext';
 import { firestore, storage } from '../firebase';
@@ -35,6 +35,10 @@ function Home() {
   }, [])
 
   console.log(userData);
+
+  // Storing FName and LName
+  const userFirstName = userData.firstName;
+  const userLastName = userData.lastName;
 
   // Firestore Fetch Posts
   const [posts, setPosts] = useState([]);
@@ -111,10 +115,10 @@ function Home() {
     display: 'none',
   });
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#EEEEEE' }}>
       <CssBaseline />
 
-      <MenuDrawer />
+      <MenuDrawer userFirstName={userFirstName} userLastName={userLastName}/>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
@@ -132,10 +136,10 @@ function Home() {
               <label htmlFor="icon-button-file">
                 <Input type="file" id="icon-button-file"/>
                 <IconButton color="primary" aria-label="upload picture" component="span">
-                  <PhotoCamera fontSize="large"/>
+                  <PhotoCamera sx={{color: '#393E46'}} fontSize="large"/>
                 </IconButton>
               </label>
-              <Button variant="contained" sx={{ marginLeft: { xs:'70%', sm: '89%' }  }} type="submit">Post</Button>
+              <Button variant="contained" sx={{ marginLeft: { xs:'70%', sm: '89%' }, backgroundColor: '#393E46' }} type="submit">Post</Button>
             </form> 
 
             {file && <ProgressBar progress={progress} url={url} file={file} setFile={setFile}/>}

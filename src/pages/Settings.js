@@ -33,6 +33,10 @@ const Settings = () => {
 
     console.log(userData);
 
+    // Storing FName and LName
+    const userFirstName = userData.firstName;
+    const userLastName = userData.lastName;
+
     // Modal (Email & Password Change)
     function handleEmailPasswordChangeSubmit(e) {
         e.preventDefault();
@@ -237,8 +241,8 @@ const Settings = () => {
     });
 
     return (
-        <Box>
-            <MenuDrawer />
+        <Box sx={{ backgroundColor: '#EEEEEE' }}>
+            <MenuDrawer userFirstName={userFirstName} userLastName={userLastName}/>
             <Box component="main" sx={{ flexGrow: 1, p: 3, margin: {xs: '50px 0px'}, marginLeft: {sm: '240px'}, marginRight: {sm: '400px'} }}>
 
                 {/* Profile Picture Change */}
@@ -258,10 +262,10 @@ const Settings = () => {
                             <label htmlFor="icon-button-file">
                                 <Input type="file" id="icon-button-file" />
                                 <IconButton  color="primary" aria-label="upload picture" component="span">
-                                    <PhotoCamera fontSize="large"/>
+                                    <PhotoCamera sx={{color: '#393E46'}} fontSize="large"/>
                                 </IconButton>
                             </label>
-                            <Button type="submit" variant="contained">
+                            <Button sx={{backgroundColor: '#393E46' }} type="submit" variant="contained">
                                 Upload
                             </Button>
                             </form>
@@ -273,7 +277,7 @@ const Settings = () => {
                 </Grid>
 
                 {/* Name Change */}
-                <Card sx={{m: '5px'}}>
+                <Card sx={{m: '10px'}}>
                     <CardHeader
                         subheader="Edit Name"
                         action={

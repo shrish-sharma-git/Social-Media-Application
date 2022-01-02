@@ -30,7 +30,7 @@ const Post = ({ doc }) => {
       }
     }
     return (  
-        <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'} }}>
+        <Card sx={{ margin: {xs: '15px 0px 15px'}, padding: {xs: '15px'}}}>
             <CardHeader
               avatar={
                 <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe" 
@@ -54,7 +54,7 @@ const Post = ({ doc }) => {
             </CardContent>
             <CardActions disableSpacing>
               <IconButton aria-label="add to favorites" onClick={handleLikes}>
-                {like ? <FavoriteRounded /> : <FavoriteBorderRounded /> }
+                {like ? <FavoriteRounded sx={{color: 'red'}} /> : <FavoriteBorderRounded /> }
                 
               </IconButton>
               {/* <Typography

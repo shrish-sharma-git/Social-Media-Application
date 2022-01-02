@@ -13,7 +13,7 @@ import MenuItems from './MenuItems';
 // Drawer Dimensions
 const drawerWidth = 240;
 
-function MenuDrawer(props) {
+function MenuDrawer({userFirstName, userLastName}, props) {
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -23,33 +23,11 @@ function MenuDrawer(props) {
   };
 
   const drawer = (
-    <div>
+    <Box>
       <Toolbar />
       <Divider />
-      {/* <List>
-        {['Home', 'Profile'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <HomeRoundedIcon /> : <PersonRoundedIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['Settings'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <SettingsRoundedIcon /> : <SettingsRoundedIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
-
       <MenuItems />
-    </div>
+    </Box>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -64,7 +42,9 @@ function MenuDrawer(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{ backgroundColor: "#222831", color: "#EEEEEE" }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -75,7 +55,7 @@ function MenuDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Social Media 
+            Welcome, {userFirstName && userFirstName} {userLastName && userLastName}
           </Typography>
         </Toolbar>
       </AppBar>

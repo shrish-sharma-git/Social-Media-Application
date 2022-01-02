@@ -34,6 +34,9 @@ const GuestProfile = () => {
 
     console.log(userData);
 
+    // Storing FName and LName
+    const userFirstName = userData.firstName;
+    const userLastName = userData.lastName;
 
     const [postData, setPostData] = useState([]);
 
@@ -60,8 +63,8 @@ const GuestProfile = () => {
     console.log(postData)
 
     return (  
-        <Box>
-            <MenuDrawer />
+        <Box sx={{ backgroundColor: '#EEEEEE' }}>
+            <MenuDrawer userFirstName={userFirstName} userLastName={userLastName}/>
             <Box component="main" sx={{ flexGrow: 1, p: 3, margin: {xs: '50px 0px'}, marginLeft: {sm: '240px'}, marginRight: {sm: '400px'} }}>
                 
                     <Grid container>    
@@ -82,6 +85,18 @@ const GuestProfile = () => {
                                 @{userData.username}
                             </Typography>
                         </Grid>
+                        <Grid item xs={6} sx={{ textAlign: 'center', mt: '25px' }}>
+                            <Typography
+                                variant="subtitle2"
+                            >
+                                Posts  
+                            </Typography>
+                            <Typography
+                                variant="h6"
+                            >
+                                {postData.length}
+                            </Typography>
+                        </Grid>
                     </Grid>
 
                     <Grid container sx={{mt: '10px'}}>
@@ -95,7 +110,7 @@ const GuestProfile = () => {
                     {/* Image List of Posts Dummy UI*/}
                     <ImageList sx={{ width: '100%'}}>
                         <ImageListItem key="Subheader" cols={2}>
-                            <ListSubheader sx={{ textAlign: 'center', fontSize:'inherit' }} component="div">My Posts</ListSubheader>
+                            <ListSubheader sx={{ textAlign: 'center', fontSize:'inherit', backgroundColor: '#EEEEEE' }} component="div">My Posts</ListSubheader>
                         </ImageListItem>
                         {postData.map((item) => (
                             <ImageListItem key={item.id}>
