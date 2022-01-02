@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import { Avatar, Button, Card, TextField } from '@mui/material';
+import { Avatar, Button, Card, TextField, Tooltip } from '@mui/material';
 import RightSidebar from './components/RightSidebar';
 import { PhotoCamera, UnfoldLess } from '@mui/icons-material';
 import MenuDrawer from './components/MenuDrawer';
@@ -135,9 +135,11 @@ function Home() {
               />
               <label htmlFor="icon-button-file">
                 <Input type="file" id="icon-button-file"/>
-                <IconButton color="primary" aria-label="upload picture" component="span">
-                  <PhotoCamera sx={{color: '#393E46'}} fontSize="large"/>
-                </IconButton>
+                <Tooltip title="Upload Image/GIF" arrow>
+                  <IconButton color="primary" aria-label="upload picture" component="span">
+                    <PhotoCamera sx={{color: '#393E46'}} fontSize="large"/>
+                  </IconButton>
+                </Tooltip>
               </label>
               <Button variant="contained" sx={{ marginLeft: { xs:'70%', sm: '89%' }, backgroundColor: '#393E46' }} type="submit">Post</Button>
             </form> 

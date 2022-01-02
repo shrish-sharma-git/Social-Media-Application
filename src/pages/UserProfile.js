@@ -1,6 +1,6 @@
 import { InfoRounded } from '@material-ui/icons';
 import { DeleteOutlineRounded } from '@mui/icons-material';
-import { Avatar, Divider, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Typography } from '@mui/material';
+import { Avatar, Divider, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, ListSubheader, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
@@ -135,13 +135,15 @@ const UserProfile = () => {
                                 // title={item.title}
                                 subtitle={item.caption}
                                     actionIcon={
-                                    <IconButton
+                                    <Tooltip title="Delete Post" arrow>
+                                        <IconButton
                                         sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                         aria-label={`info about ${item.title}`}
                                         onClick={() => deletePost(item.id)}
                                     >
-                                        <DeleteOutlineRounded sx={{ color : 'red' }} />
-                                    </IconButton>
+                                            <DeleteOutlineRounded sx={{ color : 'red' }} />
+                                        </IconButton>
+                                    </Tooltip>
                                     }
                             />
                             </ImageListItem>

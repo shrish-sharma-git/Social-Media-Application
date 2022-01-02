@@ -1,4 +1,4 @@
-import { Avatar, Backdrop, Button, Card, CardHeader, Divider, Fade, Grid, IconButton, Input, Modal, TextField, Typography } from '@mui/material';
+import { Avatar, Backdrop, Button, Card, CardHeader, Divider, Fade, Grid, IconButton, Input, Modal, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
 import MenuDrawer from './components/MenuDrawer';
@@ -261,9 +261,11 @@ const Settings = () => {
                             <form onSubmit={profileImageChangeHandler}>
                             <label htmlFor="icon-button-file">
                                 <Input type="file" id="icon-button-file" />
-                                <IconButton  color="primary" aria-label="upload picture" component="span">
-                                    <PhotoCamera sx={{color: '#393E46'}} fontSize="large"/>
-                                </IconButton>
+                                <Tooltip title="Upload Image/GIF" arrow>
+                                    <IconButton  color="primary" aria-label="upload picture" component="span">
+                                        <PhotoCamera sx={{color: '#393E46'}} fontSize="large"/>
+                                    </IconButton>
+                                </Tooltip>    
                             </label>
                             <Button sx={{backgroundColor: '#393E46' }} type="submit" variant="contained">
                                 Upload
@@ -281,11 +283,13 @@ const Settings = () => {
                     <CardHeader
                         subheader="Edit Name"
                         action={
-                            <IconButton aria-label="edit">
-                                <EditRoundedIcon
-                                    onClick={handleOpenName}
-                                />
-                            </IconButton>
+                            <Tooltip title="Edit Name" arrow>
+                                <IconButton aria-label="edit">
+                                    <EditRoundedIcon
+                                        onClick={handleOpenName}
+                                    />
+                                </IconButton>
+                            </Tooltip>
                         }
                     />
                     <Grid container sx={{m: '10px', p: '10px'}}>
@@ -353,11 +357,13 @@ const Settings = () => {
                     <CardHeader
                             subheader="Edit Username"
                             action={
-                                <IconButton aria-label="edit">
-                                    <EditRoundedIcon
-                                        onClick={handleOpenUsername}
-                                    />
-                                </IconButton>
+                                <Tooltip title="Edit Username" arrow>
+                                    <IconButton aria-label="edit">
+                                        <EditRoundedIcon
+                                            onClick={handleOpenUsername}
+                                        />
+                                    </IconButton>
+                                </Tooltip>    
                             }
                     />
                     <Grid container sx={{m: '10px', p: '10px'}}>
@@ -425,11 +431,13 @@ const Settings = () => {
                     <CardHeader
                             subheader="Edit Bio"
                             action={
-                                <IconButton aria-label="edit">
-                                    <EditRoundedIcon
-                                        onClick={handleOpenBio}
-                                    />
-                                </IconButton>
+                                <Tooltip title="Edit Bio" arrow>
+                                    <IconButton aria-label="edit">
+                                        <EditRoundedIcon
+                                            onClick={handleOpenBio}
+                                        />
+                                    </IconButton>
+                                </Tooltip>
                             }
                     />
                     <Grid container sx={{m: '10px', p: '10px'}}>
@@ -493,11 +501,13 @@ const Settings = () => {
                     <CardHeader
                             subheader="Privacy & Security Settings"
                             action={
-                                <IconButton aria-label="edit">
-                                    <EditRoundedIcon
-                                        onClick={handleOpen}
-                                    />
-                                </IconButton>
+                                <Tooltip title="Change Email/Password">
+                                    <IconButton aria-label="edit">
+                                        <EditRoundedIcon
+                                            onClick={handleOpen}
+                                        />
+                                    </IconButton>
+                                </Tooltip>
                             }
                     />
                     <Grid container sx={{m: '10px', p: '10px'}}>
