@@ -116,8 +116,8 @@ const UserProfile = () => {
 
                     <Divider sx={{m: '10px 0 10px 0'}} />
 
-                    {/* Image List of Posts Dummy UI*/}
-                    <ImageList sx={{ width: '100%'}}>
+                    {/* Image List of Posts UI*/}
+                    <ImageList>
                         <ImageListItem key="Subheader" cols={2}>
                             <ListSubheader sx={{ textAlign: 'center', fontSize:'inherit', backgroundColor: '#EEEEEE' }} component="div" >My Posts</ListSubheader>
                         </ImageListItem>
