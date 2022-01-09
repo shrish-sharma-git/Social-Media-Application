@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Avatar, Button, Card, CardHeader } from '@mui/material';
+import { Avatar, Button, Card, CardHeader, Tooltip } from '@mui/material';
 import { firestore } from '../../firebase';
 import { useHistory } from 'react-router-dom';
 
@@ -51,13 +51,18 @@ const RightSidebar = () => {
         <Card sx={{ margin: '15px 35px 15px 35px', padding: '10px 0px'}} key={doc.id}>
         <CardHeader
           avatar={
-            <Avatar sx={{bgcolor: '#1976D2'}}
+            <Tooltip
+              title="Visit Profile"
+              arrow
+            >
+              <Avatar sx={{bgcolor: '#1976D2'}}
               src={doc.profileImageURL}
               onClick={() => history.push({
                 pathname: '/GuestProfile',
                 state: {detail : doc.id}
               })}
-            />              
+            />
+            </Tooltip>              
           }
           title={doc.firstName + " " + doc.lastName}
           subheader={doc.username}
